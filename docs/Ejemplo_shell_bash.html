@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Ejemplo_shell_bash</title>
+    <style>
+       body{font-family: Loma;}
+      /*Ubuntu*/
+      ul.c{border: 1px solid grey; list-style-type: none;}
+      blockquote{font-size: 80%;}
+      .use{color: #26A269;}
+      .url{color: #12488B;}
+    </style>
+  </head>
+  <body>
+    <p>¿COMO FUNCIONAN LOS REDIRECCIONAMIENTOS Y PIPES en «SHELL BASH»?</p>
+    <p>La redirección «&lt;» delante del nombre de archivo configura este como
+      entrada estándar de «cat» cuya salida estándar es por pantalla. Ahora
+      bien, podemos redireccionar la salida estandar de «cat» mediante «&gt;»
+      delante del nombre del archivo, para que este pase a ser la salida
+      estandar de «cat».</p>
+    <ul class="c">
+      <li><b class="use">user@host</b>:<b class="url">~</b>$ echo "pera pepino
+        tomate pera manzana espinaca"&gt;infile</li>
+      <li><b class="use">user@host</b>:<b class="url">~</b>$ &lt;infile cat
+        &gt;outfile</li>
+      <li><b class="use">user@host</b>:<b class="url">~</b>$ cat outfile <br>
+        pera pepino tomate pera manzana espinaca</li>
+    </ul>
+    <p>Los ejemplos, entre otros, de los que tenemos que replicar su
+      comportamiento son:<br>
+    </p>
+    <ol>
+      <li><b class="url">~</b>$ ./pipex infile "ls -l" "wc -l" outfile <b><u style="font-family: monospace;">deberá
+            hacer lo mismo que</u></b> <b class="url">~</b>$ &lt;infile ls -l |
+        wc -l &gt;outfile</li>
+      <li><b class="url">~</b>$ ./pipex infile "grep a1" "wc -w" outfile <b><u><span
+              style="font-family: monospace;">deberá hacer lo mismo que</span></u></b>
+        <b class="url">~</b>$ &lt;infile grep a1 | wc -w &gt;outfile</li>
+    </ol>
+    <ul class="c">
+      <li><b class="use">user@host</b>:<b class="url">~</b>$ echo "pera pepino
+        tomate pera manzana espinaca" | tr ' ' '\n' &gt;outfile</li>
+      <li><b class="use">user@host</b>:<b class="url">~</b>$ &lt;infile grep
+        pera | wc -l&gt;outfile</li>
+      <li><b class="use">user@host</b>:<b class="url">~</b>$cat outfile<br>
+        2</li>
+    </ul>
+    <blockquote>
+      <p>Investigación: </p>
+      <ol>
+        <li><a href="https://www.ibm.com/docs/es/aix/7.2?topic=shell-input-output-redirection-in-c"
+            target="_blank">https://www.ibm.com/docs/es/aix/7.2?topic=shell-input-output-redirection-in-c</a></li>
+        <li> <a href="http://persoal.citius.usc.es/tf.pena/ASR/Tema_2html/node16.html%20"
+            target="_blank">http://persoal.citius.usc.es/tf.pena/ASR/Tema_2html/node16.html
+            </a></li>
+        <li>https://voidnull.es/las-redirecciones-en-gnu-linux/</li>
+        <li>https://blog.thehacknotes.com/p/terminal-l%C3%ADnea-de-comandos-redirecciones-y-tuber%C3%ADas-linux/</li>
+        <li>https://hackernoon.com/es/permite-construir-un-linux-shell-part-i-bz3n3vg1</li>
+      </ol>
+    </blockquote>
+    <p></p>
+  </body>
+</html>
