@@ -41,8 +41,8 @@
     <ul class="c">
       <li><b class="use">user@host</b>:<b class="url">~</b>$ echo "pera pepino
         tomate pera manzana espinaca" | tr ' ' '\n' &gt;infile</li>
-      <li><b class="use">user@host</b>:<b class="url">~</b>$ ./pipex infile
-        "grep pera" "wc -l" outfile</li>
+      <li><b class="use">user@host</b>:<b class="url">~</b>$ &lt;infile grep
+        pera | wc -l&gt;outfile</li>
       <li><b class="use">user@host</b>:<b class="url">~</b>$cat outfile<br>
         2</li>
     </ul>
