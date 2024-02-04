@@ -2,8 +2,29 @@
  * Dynamically allocated multi-dimensional arrays in C
  * https://www.youtube.com/watch?v=-y8FUvRq_88&t=4s
 */
-#include <stdio.h>
-#include <unistd.h>
+#include <stdio.h> // printf()
+#include <stdlib.h> // malloc(), free()
+
+/** matrix_free(char **array, size_t row) libera la memoria del array 
+ * de 2 dimensiones (matriz ó array de array's) que hemos creado ó 
+ * intentado crear mediante la alocación dinámica de memoria. 
+ * Recibe dos parámetros: 
+ * la matriz y el número del array dentro de la matriz. */
+static char	**matrix_free(char **split, size_t row) 
+{
+    while (row-- > 0)
+		if (split[row])
+        {
+            free(split[row]);
+            split[row] = NULL;
+        }
+			
+	if (split)
+    {
+        free(split);
+    }
+	return (NULL);
+}
 
 int *ft_cuts(const char *str, int c)
 {
@@ -39,15 +60,7 @@ char    *ft_word(const char *str, int c, int *i)
     return (word);
 }
 
-static char	**matrix_free(char **split, size_t row)
-{
-    while (row-- > 0)
-		if (split[row])
-			free(split[row]);
-	if (split)
-		free(split);
-	return (NULL);
-}
+
 
 char *sp(const char *str, char c, char **spine, int *cuts)
 {

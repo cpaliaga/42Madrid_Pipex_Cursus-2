@@ -7,14 +7,17 @@ https://manpages.debian.org/stretch/manpages-es/wait.2.es.html
 https://en.wikipedia.org/wiki/File_descriptor
 */
 
-#include <stdlib.h> // exit() function.
-#include <stdio.h>
-#include <unistd.h> // System calls - family exec functions.
-#include <time.h>
-#include <sys/types.h> /* tipo pid t que no es mas que un 
-identificador de proceso linux PID*/
-#include <sys/wait.h> // wait() function
-#include <errno.h> // Variable errno
+/** En zsh localizaremos la ruta del comando con "whence -p" (tells executable path). 
+ * */
+
+#include <stdio.h> // printf() function
+#include <unistd.h> // System calls: close() - family exec() functions.
+#include <sys/types.h> 
+/* tipo pid_t que no es mas que un identificador de proceso linux PID */
+#include <sys/wait.h> 
+// wait() function
+// #include <errno.h> // Variable errno
+// #include <stdlib.h> // exit() function.
 /** tr [OPTION]... SET1 [SET2]
  * Translate, squeeze (-s), and/or delete (-d) characters from 
  * standard input (keyboard), writing to standard output (screen).
@@ -25,25 +28,41 @@ identificador de proceso linux PID*/
 
 int main(void)
 {
-    int ex;   
-    char cmd_path[] = "/usr/bin/tr";
-    char *argVec[]={"tr"," ", "\n", NULL};
-    char *env[]={NULL};
-    ex = execve(cmd_path, argVec, env);
-    if (ex == -1)
+    pid_t pid; /** Nos reparamos para clonar el proceso y tener un proceso hijo */
+    
+    char *argVec[]={"/bin/ls","-la", NULL}; // Parámetro de execve()
+    char *env[]={NULL};  // Parámetro de execve()
+
+    pid = fork(); /** Bifurcamos/clonamos el proceso para obtener el proceso hijo */
+    if (pid == -1) /** Control de errores EXIT_FAILURE */
     {
-        perror("No se puede ejecutar");
-        exit(1); 
-        /* exit (int status) Produce la terminación del proceso actual */
-        /* status - El uso de EXIT_SUCCESS y EXIT_FAILURE es ligeramente 
-        más portable (para entornos no Unix) que el de 0 y algún 
-        valor distinto de cero como 1 o -1.*/
-    };
-    printf("%i", ex);
-    //close(); close a file descriptor
-    /* #include <unistd.h>  int close(int fd);
-    Returns zero on success.  On error, -1 is returned, and
-       errno is set to indicate the error.
-    */
-    return (0);
+        return(-1);
+    }
+
+    if (pid == 0) /* PROCESO HIJO */
+    {
+        int ex = execve(argVec[0], argVec, env); /** 
+        * Una vez que se ejecute execve() sobreescribirá ∑overwrite∑ 
+        * el procedimiento de main(). Todas las instrucciones 
+        * a partir de este punto no se ejecutarán. Excepto que execve()
+        * se ejecute en un proceso hijo de main() */
+       if (ex == -1) /** Control de errores EXIT_FAILURE */
+       {
+            perror("Error");
+            /* exit(1); exit (int status) Produce la terminación del proceso actual */
+            /** status - El uso de EXIT_SUCCESS y EXIT_FAILURE es ligeramente 
+             * más portable (para entornos no Unix) que el de 0 y algún 
+             * valor distinto de cero como 1 o -1.*/
+        };
+    }
+    else /* PROCESSO PADRE */
+    {
+        wait(NULL); // Susspendemos el procceso padre hasta que el proceso hijo termine.
+        printf("Processo ejecutado. \n");
+        // close(int fd); 
+        /** int close(int fd) cierra un file descriptor.
+         * Returns zero on success. On error, -1 is returned, 
+         * and errno is set to indicate the error. */
+    }
+    return (0); // EXIT_SUCCESS
 }
