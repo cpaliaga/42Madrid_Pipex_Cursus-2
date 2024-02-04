@@ -19,8 +19,8 @@ int main (void)
     /* Declaramos un array de dos enteros para los 
     «file descriptors» */
     int fd[2];
-    // fd[0] - read (para leer)
-    // fd[1] - write (pasa escribir)
+    // fd[0] - read (para leer) O_RDONLY
+    // fd[1] - write (pasa escribir) O_WRONLY
     
     /* Creamos el «pipe» y controlamos errores */
     if (pipe(fd) == -1)
@@ -32,7 +32,7 @@ int main (void)
     Uno de los procesos creados con fork será nuestro principal 
     */
     
-    int pid1 = fork();
+    int pid1 = fork();  // 
     
     /* Control de errores del primer proceso hijo */
     if (pid1 < 0)
@@ -40,13 +40,13 @@ int main (void)
         return (1);
     }
     
-    if (pid1 == 0)
+    if (pid1 == 0) /** PROCESO HIJO */
     {
         /* Ahora estamos en el proceso hijo «child process» («ping») */
         dup2(fd[1], STDOUT_FILENO);
-        close(fd[0]);
-        close(fd[1]);
-        execlp("ping", "ping", "-c", "5", "google.com", NULL);
+        close(fd[0]); // Cierro READ
+        close(fd[1]); // Cierro WRITE
+        execlp("ls", "ls", "-la", NULL);
     }
     
     int pid2 = fork();
@@ -64,7 +64,7 @@ int main (void)
         dup2(fd[0], STDIN_FILENO);
         close(fd[0]);
         close(fd[1]);
-        execlp("grep", "grep", "rtt", NULL);
+        execlp("grep", "grep", ".c", NULL);
     }
     
     close(fd[0]);
