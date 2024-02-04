@@ -60,25 +60,30 @@ char    *ft_word(const char *str, int c, int *i)
     return (word);
 }
 
-
-
-char *sp(const char *str, char c, char **spine, int *cuts)
+char *split_words(const char *str, char c, char **spine, int cuts)
 {
     int i;
+    int p;
 
-    i = -1;
-    while (cuts[1] != 0)
+    i = 0;
+    p = 0;
+    while (p++ < (cuts[1]+1))
     {
-        if (str[0] == c ||| str[i] == c)
+        if (str[0] == c || str[i] == c)
             ++i;
         while (str[++i] != c && str)
         {
-            spine[cuts[1]] = ft_word(str, c, &i);
-            matrix_free(spine, cuts[1])
+            spine[p] = (char *)malloc(reel * sizeof(char));
+            if (!spine[p])
+            {
+                matrix_free(spine, p)
+                return (NULL);
+            }
+            while (++i < (i + reel))
+                spine[p] = str[i];
+            /** ft_word(str, c, &i);*/     
         }
-        cuts[1]--;
     }
-
 }
 /** La función «split» devolverá un array de arrays. 
  * Ya que su finalidad es la de divir una cadena por el delimitador.
@@ -89,18 +94,16 @@ char *sp(const char *str, char c, char **spine, int *cuts)
 char *split(const char *str, char c)
 {
     char **spine;
-    char *word;
-    int i;
     int cuts;
 
+    if (!str || !c)
+        return (NULL);
     cuts = ft_cuts(str, c);
     spine = (char **)malloc((cuts[1]+1) * (sizeof(char*)));
     if (!spine)
         return (NULL);
-    i = -1; 
-
-   
-    return (split);
+    split_words(str, c, spine, cuts);
+    return (spine);
 }
 
 int main()
