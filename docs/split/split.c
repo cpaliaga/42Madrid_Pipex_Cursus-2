@@ -31,21 +31,21 @@ static char **error_matrix_free(char **arr, size_t row)
 
 size_t  ft_cuts(const char *str, int c)
 {
-    size_t rep[2]; // El array contiene dos valores.
+    size_t rep[2];
 
-    rep[0] = 0; // 0 - length
-    rep[1] = 0; // 1 - repetitions number
-    while(str[rep[0]] != '\0') // Mientras no llegue al final de la cadena.
+    rep[0] = 0;
+    rep[1] = 0;
+    while(str[rep[0]] != '\0')
     {
-        if (rep[0] == 0)    /* Si es el primero */
-            if(str[rep[0]] != c)    /* Si es letra */
+        if (rep[0] == 0)
+            if(str[rep[0]] != c)
                 rep[1] += 1;
-        if (str[rep[0] + 1] != '\0')  /* Si no es el último */
-            if (str[rep[0]] == c && str[rep[0] + 1] != c) /* Si es delimitador y siguiente letra */
+        if (str[rep[0] + 1] != '\0')
+            if (str[rep[0]] == c && str[rep[0] + 1] != c)
                 rep[1] += 1;
         rep[0]++;         
     }
-    return (rep[1]); // No se pueden devolver arrays, pero sí punteros.
+    return (rep[1]);
 }
 
 size_t  ft_reels(const char *str, char c, size_t *reel)
@@ -54,35 +54,38 @@ size_t  ft_reels(const char *str, char c, size_t *reel)
 
     dim[0] = 0;
     while (str[dim[0]] != '\0')
-        dim[0]++; /* Longitud de la cadena */
-    dim[1] = 0;   /* Número de letras */
-    dim[2] = *reel; /* Índice externo de la cadena */
+        dim[0]++;
+    dim[1] = 0;   
+    dim[2] = *reel; 
     while (str[dim[1] + dim[2]] == c)
-    {// Mientras haya delimitadores.
-        if ((dim[1] + dim[2]) < dim[0]) // Si no supera la longitud de la cadena.
-            dim[2]++; // Avanzamos el puntero de delimitadores.
+    {
+        if ((dim[1] + dim[2]) < dim[0]) 
+            dim[2]++;
         else
-            break; // Si supera la longitud de la cadena, salimos del bucle.
+            break;
     }
     while (str[dim[1] + dim[2]] != c)
-    {// Mientras no haya delimitadores.
-        if ((dim[1] + dim[2]) < dim[0]) // Si no supera la longitud de la cadena.
-            dim[1]++; // Avanzamos el contador de letras.
+    {
+        if ((dim[1] + dim[2]) < dim[0])
+            dim[1]++;
         else
-            break; // Si supera la longitud de la cadena, salimos del bucle.
+            break;
     }; 
     *reel = dim[2];
-    return (dim[1]); // Devolvemos la longitud de la palabra.
+    return (dim[1]);
 }
 
-void    ft_fill(char *arr, size_t letters, const char *str, size_t *reel)
+void    ft_fill(char *arr, const char *str, size_t letters, size_t *reel)
 {
     size_t l;
+    size_t clone;
 
     l = 0;
-    while (l < (letters + 1))
+    clone = *reel;
+    while (l < letters && str[clone + l] != '\0')
     {
-        arr[l++] = str[*reel++];
+        arr[l] = str[clone + l];
+        l++;
     }
     arr[l] = '\0';
 }
@@ -104,32 +107,41 @@ char **split(const char *str, char c)
     if (!str || !c)
         return (NULL);
     cuts = ft_cuts(str, c);
-    spine = (char **)malloc(sizeof(char *) * (cuts));
+    spine = (char **)malloc(sizeof(char *) * (cuts + 1));
     if (!spine)
         return (NULL);
     reel = 0;
     p = 0;
-    printf(" Spine creaado ");
-    while (p++ < (cuts + 1))
+    while (p < (cuts + 1))
     {
         letters = ft_reels(str, c, &reel);
         spine[p] = (char *)malloc(sizeof(char) * (letters + 1));
         error_matrix_free(spine, p);
-        ft_fill(spine[p], letters, str, &reel);
+        ft_fill(spine[p], str, letters, &reel);
+        reel += letters;
+        p++;
     }
+    spine[p] = NULL;
     return (spine);
 }
 
 int main()
 {
-    char *chain = "hola mundo  que tal esta ";
+    char *chain = "hola holas hola hola ";
+    //char *chain = " hola mundo como esta hoy ";
+    //char *chain = "hola holas hola hola ";
+    //char *chain = "hola holas hola hola ";
     int c = ' ';
     char **arr = split(chain, c);
-    int row = 0; 
-    while (arr[++row] != '\0')
+    int row = 0;
+    // while (arr)
+    // while (row < 6)
+    // while (arr[row] != NULL)
+    printf("Lectura \n");
+    while (row < 5)
     {
-        printf("%s\n", arr[row]);
-        arr++;
+        printf("\n%s\n", arr[row]);
+        row++;
     }
     /** FREE MATRIX 
     while (row-- > 0)

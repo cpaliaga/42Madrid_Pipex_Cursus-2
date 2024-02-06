@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:02:38 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/06 19:04:42 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/06 21:18:49 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,13 @@ void char_array()
     ch = 0;
     while (ch++ < 4)
     {
-        arr_char[ch] = (char *)malloc(sizeof(char *) * 4);
-        arr_char[ch] = "Hola"; 
+        arr_char[ch] = (char *)malloc(sizeof(char) * 3);
+        arr_char[ch][0] = 'H'; 
+        arr_char[ch][1] = 'o';
+        arr_char[ch][2] = 'l'; 
+        arr_char[ch][3] = 'a';
+        arr_char[ch][4] = '\0';
+
         printf("%s\n", arr_char[ch]);
     }
     /** FREE MATRIX */
