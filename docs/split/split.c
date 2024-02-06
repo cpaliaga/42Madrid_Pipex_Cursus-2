@@ -10,99 +10,113 @@
  * intentado crear mediante la alocación dinámica de memoria. 
  * Recibe dos parámetros: 
  * la matriz y el número del array dentro de la matriz. */
-static char	**matrix_free(char **split, size_t row) 
+static char **error_matrix_free(char **arr, size_t row) 
 {
-    while (row-- > 0)
-		if (split[row])
-        {
-            free(split[row]);
-            split[row] = NULL;
-        }
-			
-	if (split)
+    if (!arr[row])
     {
-        free(split);
+        while (row-- > 0)
+            if (arr[row])
+            {
+                free(arr[row]);
+                arr[row] = NULL;
+            }
+        if (arr)
+        {
+            free(arr);
+            arr = NULL;
+        }
     }
 	return (NULL);
 }
 
-int *ft_cuts(const char *str, int c)
+size_t  ft_cuts(const char *str, int c)
 {
-    int rep[2];
-    int *clon;
+    size_t rep[2]; // El array contiene dos valores.
 
-    rep[0] = -1;
-    rep[1] = 0;
-    while(str[++rep[0]])
+    rep[0] = 0; // 0 - length
+    rep[1] = 0; // 1 - repetitions number
+    while(str[rep[0]] != '\0') // Mientras no llegue al final de la cadena.
     {
-        if (str[rep[0]] == c && rep[0] != 0)
-            if(str[rep[0]+1] != '\0' && str[rep[0]+1] != c)
-                rep[1] += 1;            
-    } 
-    clon = rep;
-    return (clon);
-}
-
-char    *ft_word(const char *str, int c, int *i)
-{
-    int j;
-    int stop;
-    char *word;
-
-    j = i;
-    while (str[++j] != c && str[j])
-        stop++;
-    word = (char *)malloc(stop * sizeof(char));
-    if (!word)
-        return (NULL);
-    while (++i <= j)
-        word[i] = str[i];
-    return (word);
-}
-
-char *split_words(const char *str, char c, char **spine, int cuts)
-{
-    int i;
-    int p;
-
-    i = 0;
-    p = 0;
-    while (p++ < (cuts[1]+1))
-    {
-        if (str[0] == c || str[i] == c)
-            ++i;
-        while (str[++i] != c && str)
-        {
-            spine[p] = (char *)malloc(reel * sizeof(char));
-            if (!spine[p])
-            {
-                matrix_free(spine, p)
-                return (NULL);
-            }
-            while (++i < (i + reel))
-                spine[p] = str[i];
-            /** ft_word(str, c, &i);*/     
-        }
+        if (rep[0] == 0)    /* Si es el primero */
+            if(str[rep[0]] != c)    /* Si es letra */
+                rep[1] += 1;
+        if (str[rep[0] + 1] != '\0')  /* Si no es el último */
+            if (str[rep[0]] == c && str[rep[0] + 1] != c) /* Si es delimitador y siguiente letra */
+                rep[1] += 1;
+        rep[0]++;         
     }
+    return (rep[1]); // No se pueden devolver arrays, pero sí punteros.
 }
+
+size_t  ft_reels(const char *str, char c, size_t *reel)
+{
+    size_t dim[3];
+
+    dim[0] = 0;
+    while (str[dim[0]] != '\0')
+        dim[0]++; /* Longitud de la cadena */
+    dim[1] = 0;   /* Número de letras */
+    dim[2] = *reel; /* Índice externo de la cadena */
+    while (str[dim[1] + dim[2]] == c)
+    {// Mientras haya delimitadores.
+        if ((dim[1] + dim[2]) < dim[0]) // Si no supera la longitud de la cadena.
+            dim[2]++; // Avanzamos el puntero de delimitadores.
+        else
+            break; // Si supera la longitud de la cadena, salimos del bucle.
+    }
+    while (str[dim[1] + dim[2]] != c)
+    {// Mientras no haya delimitadores.
+        if ((dim[1] + dim[2]) < dim[0]) // Si no supera la longitud de la cadena.
+            dim[1]++; // Avanzamos el contador de letras.
+        else
+            break; // Si supera la longitud de la cadena, salimos del bucle.
+    }; 
+    *reel = dim[2];
+    return (dim[1]); // Devolvemos la longitud de la palabra.
+}
+
+void    ft_fill(char *arr, size_t letters, const char *str, size_t *reel)
+{
+    size_t l;
+
+    l = 0;
+    while (l < (letters + 1))
+    {
+        arr[l++] = str[*reel++];
+    }
+    arr[l] = '\0';
+}
+
 /** La función «split» devolverá un array de arrays. 
  * Ya que su finalidad es la de divir una cadena por el delimitador.
  * https://www.youtube.com/watch?v=Cj69VbwloW8
  * 
  * */
 
-char *split(const char *str, char c)
+char **split(const char *str, char c)
 {
     char **spine;
-    int cuts;
+    size_t reel;
+    size_t letters;
+    size_t cuts;
+    size_t p;
 
     if (!str || !c)
         return (NULL);
     cuts = ft_cuts(str, c);
-    spine = (char **)malloc((cuts[1]+1) * (sizeof(char*)));
+    spine = (char **)malloc(sizeof(char *) * (cuts));
     if (!spine)
         return (NULL);
-    split_words(str, c, spine, cuts);
+    reel = 0;
+    p = 0;
+    printf(" Spine creaado ");
+    while (p++ < (cuts + 1))
+    {
+        letters = ft_reels(str, c, &reel);
+        spine[p] = (char *)malloc(sizeof(char) * (letters + 1));
+        error_matrix_free(spine, p);
+        ft_fill(spine[p], letters, str, &reel);
+    }
     return (spine);
 }
 
@@ -110,12 +124,25 @@ int main()
 {
     char *chain = "hola mundo  que tal esta ";
     int c = ' ';
-    int **r = split(chain, c);
-
-    int i = -1; 
-    while (r[++i])
-        printf("%s\n", r[i]);
-    //printf("Repite %i de %i\n", r[0][0], r[0][1]);
-    //printf("Repite %i\n", ft_repeat_in(chain, c));
+    char **arr = split(chain, c);
+    int row = 0; 
+    while (arr[++row] != '\0')
+    {
+        printf("%s\n", arr[row]);
+        arr++;
+    }
+    /** FREE MATRIX 
+    while (row-- > 0)
+        if (arr[row])
+        {
+            free(arr[row]);
+            arr[row] = NULL;
+        }
+    if (arr)
+    {
+        free(arr);
+        arr = NULL;
+    } */
     return (0);
 }
+/* [1]    20109 segmentation fault  ./a.out */
