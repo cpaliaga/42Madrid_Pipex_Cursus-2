@@ -12,10 +12,11 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/types.h> // Tipo --> pid_t
 
 int main()
 {
-	/* El tipo de datos "pid_t" es un tipo de datos que se empllea en la 
+	/* El tipo de datos "pid_t" es un tipo de datos que se emplea en la 
 	 * identificación de procesos.
 	 * Se usa junto con las funciones getpid() y getppid() que retornan 
 	 * el ID de proceso actual y de su proceso padre, respectivamennte. 
@@ -34,11 +35,17 @@ int main()
 	}
 	if (pid == 0)
 	{
-		printf("Soy el hijo %i mi ID es %i y el de mi padre %i \n", pid, getpid(), getppid());
+		printf("Soy el HIJO. Mi pid es %i \n", pid);
+		printf("Soy el HIJO. Mi getpid() es %i \n", getpid());
+		printf("Soy el HIJO. Mi getppid() es %i \n", getppid());
+		//printf("Soy el hijo %i mi ID es %i y el de mi padre %i \n", pid, getpid(), getppid());
 	}
 	else
 	{
-		printf("Soy el padre %i mi ID es %i no tengo padre %i \n", pid, getpid(), getppid());
+		printf("Soy el PADRE. Mi pid es %i \n", pid);
+		printf("Soy el PADRE. Mi getpid() es %i \n", getpid());
+		printf("Soy el PADRE. Mi getppid() es %i \n", getppid());
+		//printf("Soy el padre %i mi ID es %i no tengo padre %i \n", pid, getpid(), getppid());
 		sleep(2);
 	}
 	return (0);
