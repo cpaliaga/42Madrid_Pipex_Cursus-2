@@ -10,42 +10,46 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRC_DIR = ./
-SRC_FILES = pipex.c
+#### MACROS ####
+SRC_DIR = ./srcs/
+SRC_FILES = pipex.c utils.c libft.a
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-INC_DIR = ./
+LIBA_DIR = ./libft/
+LIBA_FILES = libft.a
+LIBA = $(addprefix $(LIBA_DIR), $(LIBA_FILES))
+
+INC_DIR = ./includes/
 INC_FILES = pipex.h
 LIB = $(addprefix $(INC_DIR), $(INC_FILES))
 
 OBJ = $(subst .c,.o,$(SRC))
 
 CFLAGS = -Wall -Wextra -Werror 
-EFLAGS  = -pedantic
+EFLAGS  = -pedantic -fsanitize=address -g3
 NAME = pipex
-
-EXECUTE= .
 
 #### REGLAS ####
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar crs $(NAME) $(OBJ)
-	ranlib $(NAME)
-	echo "library $(NAME) created & indexed"
+	make all -C libft
+	gcc $(CFLAGS) $(SRCS) $(LIBA) -o $(NAME)
+	echo "«$(NAME)» created & indexed"
 
 $(filter-out %.o, $(SRC)): $(filter-out %.c, $(SRC))
 	gcc $(CFLAGS) -I$(INC_DIR) -c $^ -o $@
 
 clean:
-	rm -fr $(SRC:.c=.o)
+	@make fclean -C libft
+	@rm -fr $(SRC:.c=.o)
 	echo "OBJECTS deleted"
 
 fclean: clean
 	@rm -fr $(NAME)
-	@echo "$(NAME) deleted"
+	@make clean -C libft
+	echo "«$(NAME)» deleted"
 
 re: fclean all bonus
 
 .PHONY: all clean fclean re
-
