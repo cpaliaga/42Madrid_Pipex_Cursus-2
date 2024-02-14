@@ -97,10 +97,10 @@ void    ft_fill(char *arr, const char *str, size_t letters, size_t *reel)
  * 
  * */
 
-char **split(const char *str, char c)
+char **split(const char *str, char c, size_t *reel)
 {
     char **spine;
-    size_t reel;
+    
     size_t letters;
     size_t cuts;
     size_t p;
@@ -111,40 +111,41 @@ char **split(const char *str, char c)
     spine = (char **)malloc(sizeof(char *) * (cuts + 1));
     if (!spine)
         return (NULL);
-    reel = 0;
+    printf("Pos %li, ", *reel);
     p = 0;
-    while (p < (cuts + 1))
+    while (p < (cuts))
     {
-        letters = ft_reels(str, c, &reel);
+        letters = ft_reels(str, c, reel);
         spine[p] = (char *)malloc(sizeof(char) * (letters + 1));
         error_matrix_free(spine, p);
-        ft_fill(spine[p], str, letters, &reel);
-        reel += letters;
+        ft_fill(spine[p], str, letters, reel);
+        *reel += letters;
         p++;
     }
-    spine[p] = 0;
+    spine[p] = NULL;
     return (spine);
 }
 
 int main()
 {
-    char *chain = "hola holas hola hola ";
-    //char *chain = " hola mundo como esta hoy ";
     //char *chain = "hola holas hola hola ";
+    //char *chain = " hola mundo como esta hoy ";
+    char *chain = "hola lolo";
     //char *chain = "hola holas hola hola ";
     int c = ' ';
-    char **arr = split(chain, c);
+    size_t reel = 9;
+    char **arr = split(chain, c, &reel);
     int row = 0;
     // while (arr)
     // while (row < 6)
     // while (arr[row] != NULL)
-    printf("Lectura \n");
-    while (row < 5)
+    //printf("Lectura: ");
+    while (arr[row] != NULL)
     {
         printf("\n%s\n", arr[row]);
         row++;
     }
-    /** FREE MATRIX 
+    /** FREE MATRIX */
     while (row-- > 0)
         if (arr[row])
         {
@@ -155,6 +156,6 @@ int main()
     {
         free(arr);
         arr = NULL;
-    } */
+    } 
     return (0);
 }
