@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_reel.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/14 19:54:11 by caliaga-          #+#    #+#             */
+/*   Updated: 2024/02/14 19:56:15 by caliaga-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * Dynamically allocated multi-dimensional arrays in C
  * https://www.youtube.com/watch?v=-y8FUvRq_88&t=4s
@@ -91,13 +103,13 @@ void    ft_fill(char *arr, const char *str, size_t letters, size_t *reel)
     arr[l] = '\0';
 }
 
-/** La función «split» devolverá un array de arrays. 
+/** La función «split_reel» devolverá un array de arrays. 
  * Ya que su finalidad es la de divir una cadena por el delimitador.
  * https://www.youtube.com/watch?v=Cj69VbwloW8
  * 
  * */
 
-char **split(const char *str, char c, size_t *reel)
+char **split_reel(const char *str, char c, size_t *reel)
 {
     char **spine;
     
@@ -147,15 +159,17 @@ int main()
     }
     /** FREE MATRIX */
     while (row-- > 0)
+    {
         if (arr[row])
         {
             free(arr[row]);
             arr[row] = NULL;
         }
+    }
     if (arr)
     {
         free(arr);
         arr = NULL;
-    } 
+    }
     return (0);
 }
