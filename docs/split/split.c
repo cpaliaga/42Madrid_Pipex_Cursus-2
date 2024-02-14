@@ -1,127 +1,171 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: caliaga- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/14 20:18:58 by caliaga-          #+#    #+#             */
+/*   Updated: 2024/02/14 20:19:01 by caliaga-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdio.h> // printf()
 #include <stdlib.h> // malloc(), free()
-static size_t	*ft_rows(char const *s, char c, size_t *rows)
+
+/** matrix_free(char **array, size_t row) libera la memoria del array 
+ * de 2 dimensiones (matriz ó array de array's) que hemos creado ó 
+ * intentado crear mediante la alocación dinámica de memoria. 
+ * Recibe dos parámetros: 
+ * la matriz y el número del array dentro de la matriz. */
+static char **error_matrix_free(char **arr, size_t row) 
 {
-	size_t	nb;
-	size_t	i;
-	size_t	k;
-	size_t	*f;
-
-	i = -1;
-	nb = 0;
-	while (s[++i] != '\0')
-		if (s[i] != c)
-			if (i == 0 || s[i - 1] == c)
-				nb++;
-	*rows = nb;
-	i = -1;
-	k = -1;
-	f = malloc (nb * sizeof(size_t));
-	if (!f)
-		return (NULL);
-	while (s[++i] != '\0')
-		if (s[i] != c)
-			if (i == 0 || s[i - 1] == c)
-				f[++k] = i;
-	return (f);
-}
-
-static char	*ft_cols(const char *s, char c, size_t start)
-{
-	size_t	cols;
-	size_t	k;
-	char	*f;
-	size_t	i;
-
-	k = start;
-	cols = 0;
-	while (s[k] != c && s[k] != '\0')
-	{
-		cols++;
-		k++;
-	}
-	i = 0;
-	k = start;
-	f = malloc ((cols + 1) * sizeof(char));
-	if (!f)
-		return (NULL);
-	while (s[k] != c && s[k] != '\0')
-		f[i++] = s[k++];
-	f[i] = '\0';
-	return (f);
-}
-
-static char	**ft_check(char **split, size_t row)
-{
-	while (row-- > 0)
-	{
-		if (split[row])
-			free(split[row]);
-	}
-	if (split)
-		free(split);
+    if (!arr[row])
+    {
+        while (row-- > 0)
+            if (arr[row])
+            {
+                free(arr[row]);
+                arr[row] = NULL;
+            }
+        if (arr)
+        {
+            free(arr);
+            arr = NULL;
+        }
+    }
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+size_t  ft_cuts(const char *str, int c)
 {
-	size_t	rows;
-	size_t	row;
-	size_t	*starts;
-	char	**split;
+    size_t cut[2];
+    
+    cut[0] = 0;
+    cut[1] = 0;
+    while(str[cut[0]] != '\0')
+    {
+        if (cut[0] == 0)
+            if(str[cut[0]] != c)
+                cut[1] += 1;
+            
+        if (str[cut[0]] != c)
+            if (str[cut[0]-1] == c)
+                cut[1] += 1;
+        cut[0]++;         
+    }
+    return (cut[1]);
+}
 
-	starts = ft_rows(s, c, &rows);
-	if (!starts)
-		return (0);
-	row = 0;
-	if (!s)
-		return (NULL);
-	split = (char **) malloc ((rows + 1) * sizeof(char *));
-	if (!split)
-		return (NULL);
-	while (row < rows)
-	{
-		split[row] = ft_cols(s, c, starts[row]);
-		if (!split[row])
-			return (ft_check(split, row));
-		row++;
-	}
-	split[row] = 0;
-	if (starts)
-		free(starts);
-	return (split);
+size_t  ft_reels(const char *str, char c, size_t *reel)
+{
+    size_t dim[3];
+
+    dim[0] = 0;
+    while (str[dim[0]] != '\0')
+        dim[0]++; 
+    dim[1] = 0;
+    dim[2] = *reel;
+    while (str[dim[1]+dim[2]] == c)
+    {
+        if ((dim[1]+dim[2]) < dim[0])
+            dim[2]++;
+        else
+            break;
+    }
+    while (str[dim[1]+dim[2]] != c)
+    {
+        if ((dim[1]+dim[2]) < dim[0])
+            dim[1]++;
+        else
+            break;
+    };
+    *reel = dim[2];
+    return (dim[1]);
+}
+
+void    ft_fill(char *arr, const char *str, size_t letters, size_t *reel)
+{
+    size_t l;
+    size_t clone;
+
+    l = 0;
+    clone = *reel;
+    while (l < letters && str[clone + l] != '\0')
+    {
+        arr[l] = str[clone + l];
+        l++;
+    }
+    arr[l] = '\0';
+}
+
+/** La función «split_reel» devolverá un array de arrays. 
+ * Ya que su finalidad es la de divir una cadena por el delimitador.
+ * https://www.youtube.com/watch?v=Cj69VbwloW8
+ * 
+ * */
+
+char **split(const char *str, char c)
+{
+    char **spine;
+    
+    size_t letters;
+    size_t cuts;
+    size_t reel;
+    size_t p;
+
+    if (!str || !c)
+        return (NULL);
+    cuts = ft_cuts(str, c);
+    spine = (char **)malloc(sizeof(char *) * (cuts + 1));
+    if (!spine)
+        return (NULL);
+    reel = 0;
+    p = 0;
+    while (p < (cuts))
+    {
+        letters = ft_reels(str, c, &reel);
+        spine[p] = (char *)malloc(sizeof(char) * (letters + 1));
+        error_matrix_free(spine, p);
+        ft_fill(spine[p], str, letters, &reel);
+        reel += letters;
+        p++;
+    }
+    spine[p] = NULL;
+    return (spine);
 }
 
 int main()
 {
-    // char *chain = "hola holas hola hola ";
-    char *chain = " hola mundo como esta hoy ";
     //char *chain = "hola holas hola hola ";
+    char *chain = " hola mundo como esta hoy ";
+    //char *chain = "hola lolo";
     //char *chain = "hola holas hola hola ";
     int c = ' ';
-    char **arr = ft_split(chain, c);
+    char **arr = split(chain, c);
     int row = 0;
     // while (arr)
     // while (row < 6)
     // while (arr[row] != NULL)
-    printf("Lectura \n");
-    while (row < 5)
+    //printf("Lectura: ");
+    while (arr[row] != NULL)
     {
         printf("\n%s\n", arr[row]);
         row++;
     }
-    /** FREE MATRIX 
+    /** FREE MATRIX */
     while (row-- > 0)
+    {
         if (arr[row])
         {
             free(arr[row]);
             arr[row] = NULL;
         }
+    }
     if (arr)
     {
         free(arr);
         arr = NULL;
-    } */
+    }
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 19:54:11 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/14 19:56:15 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:18:19 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ char **split_reel(const char *str, char c, size_t *reel)
     spine = (char **)malloc(sizeof(char *) * (cuts + 1));
     if (!spine)
         return (NULL);
-    printf("Pos %li, ", *reel);
     p = 0;
     while (p < (cuts))
     {
@@ -141,12 +140,12 @@ char **split_reel(const char *str, char c, size_t *reel)
 int main()
 {
     //char *chain = "hola holas hola hola ";
-    //char *chain = " hola mundo como esta hoy ";
-    char *chain = "hola lolo";
+    char *chain = " hola mundo como esta hoy ";
+    //char *chain = "hola lolo";
     //char *chain = "hola holas hola hola ";
     int c = ' ';
-    size_t reel = 9;
-    char **arr = split(chain, c, &reel);
+    size_t reel = 0;
+    char **arr = split_reel(chain, c, &reel);
     int row = 0;
     // while (arr)
     // while (row < 6)

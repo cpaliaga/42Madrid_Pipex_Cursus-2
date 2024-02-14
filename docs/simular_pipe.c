@@ -47,7 +47,7 @@ int main (void)
         dup2(fd[0], STDIN_FILENO);
         close(fd[0]);
         close(fd[1]);
-        execlp("grep", "grep", ".c", NULL);
+        execlp("grep", "grep", ".html", NULL);
     }
     
     close(fd[0]);
