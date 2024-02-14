@@ -1,9 +1,17 @@
 /* ************************************************************************** */
-/*   cuts_and_reels.c                                                         */
-/*   By: caliaga-                                                             */
-/*   Created: 2024/02/03 16:59:21 by caliaga-                                 */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cuts_and_reels.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/14 19:04:16 by caliaga-          #+#    #+#             */
+/*   Updated: 2024/02/14 19:09:48 by caliaga-         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #include <stdio.h> // printf()
+
 
 /** La función «cuts()» devolverá el número de cortes que el delimitador hace
  * dentro de la cadena; sin contar con las coincidencias al principio ó al final
@@ -44,7 +52,7 @@ size_t cuts(const char *str, char c)
 
 int reels(const char *str, char c, size_t *reel)
 {
-    size_t dim[2];
+    size_t dim[3];
 
     dim[0] = 0; // Longitud de la cadena.
     while (str[dim[0]] != '\0')

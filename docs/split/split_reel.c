@@ -31,21 +31,22 @@ static char **error_matrix_free(char **arr, size_t row)
 
 size_t  ft_cuts(const char *str, int c)
 {
-    size_t rep[2];
-
-    rep[0] = 0;
-    rep[1] = 0;
-    while(str[rep[0]] != '\0')
+    size_t cut[2];
+    
+    cut[0] = 0;
+    cut[1] = 0;
+    while(str[cut[0]] != '\0')
     {
-        if (rep[0] == 0)
-            if(str[rep[0]] != c)
-                rep[1] += 1;
-        if (str[rep[0] + 1] != '\0')
-            if (str[rep[0]] == c && str[rep[0] + 1] != c)
-                rep[1] += 1;
-        rep[0]++;         
+        if (cut[0] == 0)
+            if(str[cut[0]] != c)
+                cut[1] += 1;
+            
+        if (str[cut[0]] != c)
+            if (str[cut[0]-1] == c)
+                cut[1] += 1;
+        cut[0]++;         
     }
-    return (rep[1]);
+    return (cut[1]);
 }
 
 size_t  ft_reels(const char *str, char c, size_t *reel)
@@ -54,23 +55,23 @@ size_t  ft_reels(const char *str, char c, size_t *reel)
 
     dim[0] = 0;
     while (str[dim[0]] != '\0')
-        dim[0]++;
-    dim[1] = 0;   
-    dim[2] = *reel; 
-    while (str[dim[1] + dim[2]] == c)
+        dim[0]++; 
+    dim[1] = 0;
+    dim[2] = *reel;
+    while (str[dim[1]+dim[2]] == c)
     {
-        if ((dim[1] + dim[2]) < dim[0]) 
+        if ((dim[1]+dim[2]) < dim[0])
             dim[2]++;
         else
             break;
     }
-    while (str[dim[1] + dim[2]] != c)
+    while (str[dim[1]+dim[2]] != c)
     {
-        if ((dim[1] + dim[2]) < dim[0])
+        if ((dim[1]+dim[2]) < dim[0])
             dim[1]++;
         else
             break;
-    }; 
+    };
     *reel = dim[2];
     return (dim[1]);
 }
