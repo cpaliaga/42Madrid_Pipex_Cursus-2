@@ -15,13 +15,15 @@
 #include <string.h>
 #include <unistd.h> // System calls - family exec 
 #include <sys/wait.h>
+#include <errno.h>
 
 int main (void)
 {
     char *argVec1[]={"/bin/ls","-la", NULL}; // Parámetro de execve()
     char *env1[]={NULL};  // Parámetro de execve()
-    char *argVec2[]={"./grep",".html", NULL}; // Parámetro de execve()
-    char *env2[]={"PATH=/usr/bin/", NULL};  // Parámetro de execve()
+    char *argVec2[]={"/usr/bin/grep",".html", NULL}; // Parámetro de execve()
+    char *env2[]={NULL};  // Parámetro de execve()
+    // "PATH=/bin:/usr/bin"
 
     int fd[2];
     if (pipe(fd) == -1)
@@ -53,15 +55,19 @@ int main (void)
         close(fd[1]);
         int ex2 = execve(argVec2[0], argVec2, env2);
         if (ex2 == -1)
+        {
+            printf("Error en execve %i\n", errno);
+            perror(strerror(errno));
             exit(1);
+        }
     }
     
     // PROCESO PADRE.
     close(fd[0]);
     close(fd[1]);
     
-    waitpid(pid1, NULL, 0);
-    waitpid(pid2, NULL, 0);
+    waitpid(pid1, NULL, 0); // Espera a que el proceso hijo 1 termine.
+    waitpid(pid2, NULL, 0); // Espera a que el proceso hijo 2 termine.
     
     return (0);
 }
