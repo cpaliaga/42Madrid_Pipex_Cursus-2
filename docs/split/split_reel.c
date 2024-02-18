@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 19:54:11 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/14 20:18:19 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/18 20:36:16 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,23 +137,60 @@ char **split_reel(const char *str, char c, size_t *reel)
     return (spine);
 }
 
-int main()
+char *select_env(char **env)
 {
+    char *pat;
+    int match;
+    int e;
+    int i;
+    
+    pat = "PATH=";
+    match = 0;
+    e = -1;
+    i = -1;
+    while (env[++e])
+    {
+        while (++i < 5)
+        {
+            if (pat[i] == env[e][i])
+            {
+                match += 1;
+            }
+        }
+        if (match == 5)
+            return (env[e]);
+        match = 0;
+        i = -1;
+    }
+    return (NULL);
+}
+
+int main(int argc, char **argv, char **env)
+{
+    printf("Parámetros %i", argc);
+    int a;
+    a = -1;
+    while (argv[++a])
+        printf("argv - %s -->\n", argv[a]);
+    // ./a.out grep
+
     //char *chain = "hola holas hola hola ";
-    char *chain = " hola mundo como esta hoy ";
+    //char *chain = " hola mundo como esta hoy ";
     //char *chain = "hola lolo";
     //char *chain = "hola holas hola hola ";
-    int c = ' ';
-    size_t reel = 0;
+    
+    //char *cmd = argv[1];
+    //char sl = '/';
+    char *chain = select_env(env);
+    int c = ':';
+    size_t reel = 5;
     char **arr = split_reel(chain, c, &reel);
+    //char **arr = split_reel(chain, c, (size_t *)5); No admite casting
     int row = 0;
-    // while (arr)
-    // while (row < 6)
-    // while (arr[row] != NULL)
-    //printf("Lectura: ");
     while (arr[row] != NULL)
     {
-        printf("\n%s\n", arr[row]);
+        printf("Matriz %i \n", row);
+        printf("\n %s \n", arr[row]);
         row++;
     }
     /** FREE MATRIX */

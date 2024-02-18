@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   perror-n-strerror.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caliaga- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 15:42:16 by caliaga-          #+#    #+#             */
-/*   Updated: 2023/12/18 18:39:09 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/18 19:05:36 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <string.h>
-#include <errno.h> // const char *sys_errlist[]
+#include <errno.h> // Variable global "errno" y "const char *sys_errlist[]""
+/** Cuanddo las funciones execve()) y access() no tienenn éxito (0),
+ * retornan un error genérico en (-1). Para conocer el error específfico 
+ * la variable global "erno" (que es un "int") se configura automáticamente.
+ * La función strerror() nos ofrece el texto del errror que se 
+ * corresponde con su número "errno".
+ * Por otro lado la función perror() nos permite informar por pantalla 
+ * del error.
+*/
 int main()
 {
 	int i;
