@@ -21,9 +21,23 @@ int main (void)
 {
     char *argVec1[]={"/bin/ls","-la", NULL}; // Parámetro de execve()
     char *env1[]={NULL};  // Parámetro de execve()
-    char *argVec2[]={"/usr/bin/grep",".html", NULL}; // Parámetro de execve()
-    char *env2[]={NULL};  // Parámetro de execve()
+    char *argVec2[]={"grep",".html", NULL}; // Parámetro de execve()
+    char *env2[]={"PATH=/bin", "PATH=/usr/bin", NULL};  // Parámetro de execve()
+    // "PATH=bin/:usr/bin/"
+    // "PATH=/bin/:/usr/bin/"
     // "PATH=/bin:/usr/bin"
+
+    /* PATH=/home/tonic_water/.local/bin:
+    /usr/local/sbin:
+    /usr/local/bin:
+    /usr/sbin:
+    /usr/bin:
+    /sbin:
+    /bin:
+    /usr/games:
+    /usr/local/games:
+    /snap/bin:
+    /snap/bin*/
 
     int fd[2];
     if (pipe(fd) == -1)
