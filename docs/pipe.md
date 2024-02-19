@@ -1,0 +1,2 @@
+## COMO FUNCIONA
+    En desarollo

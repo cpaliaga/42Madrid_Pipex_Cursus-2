@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:29:52 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/19 18:01:26 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:51:08 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int main (void)
     if (pid2 == 0)  //  SEGUNDO PROCESO HIJO. 
     {
         dup2(fd[0], STDIN_FILENO); // READ pasa a ser la salida estandar.
-        close(fd[0]);
-        close(fd[1]);
+        close(fd[0]);// Cierro READ O_RDONLY
+        close(fd[1]);// Cierro WRITE O_WRONLY
         int ex2 = execve(argVec2[0], argVec2, ex_env);
         exe_error_control(ex2);
     }

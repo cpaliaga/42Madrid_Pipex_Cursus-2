@@ -7,27 +7,21 @@ Realizaremos un ejecutable que recibe 4 parámetros de conformidaad con esta est
 Nuestro Makefile copilará este ejecutable y otras librerias permitidas como libft (Ver. Proyecto Libft)
 
 LISTADO DE FUNCIONES PERMITIDAS
-- open()
-- close(), 
-- read(), 
-- write(),
-- malloc(), 
-- free(), 
-- perror(),
-- strerror(), 
+- open() close(), [an example](/docs/open-close.md/ "Title")
+- read(), write(),
+- malloc(), free(), 
+- perror(), strerror(), 
 - access(), 
-- dup(), 
-- dup2(),
+- dup(), dup2(),
 - execve(), 
 - exit(), 
 - fork(), 
-- pipe(),
+- pipe(), [¿Cómo funciona?](/docs/pipe.md/ "Pipe function")
 - unlink(), 
-- wait(), 
-- waitpid()
-- ft_printf() and any equivalent YOU coded
+- wait(), waitpid(),
+- ft_printf() and any equivalent YOU coded.
 
-## Ejemplos  gestiona los errores como lo hace el comando de shell
+## Ejemplos gestiona los errores como lo hacen los comandos de shell
 
 $> ./pipex infile "ls -l" "wc -l" outfile:
 
