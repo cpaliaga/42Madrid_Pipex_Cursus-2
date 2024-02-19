@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 19:54:11 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/18 20:36:16 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:34:22 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,33 @@
 */
 #include <stdio.h> // printf()
 #include <stdlib.h> // malloc(), free()
+#include <unistd.h>
+#include <errno.h>
 
 /** matrix_free(char **array, size_t row) libera la memoria del array 
  * de 2 dimensiones (matriz ó array de array's) que hemos creado ó 
  * intentado crear mediante la alocación dinámica de memoria. 
  * Recibe dos parámetros: 
  * la matriz y el número del array dentro de la matriz. */
+
+static char **matrix_free(char **arr, size_t row)
+{
+    while (row-- > 0)
+    {
+        if (arr[row])
+        {
+            free(arr[row]);
+            arr[row] = NULL;
+        }
+    }
+    if (arr)
+    {
+        free(arr);
+        arr = NULL;
+    }
+    return (NULL);
+}
+
 static char **error_matrix_free(char **arr, size_t row) 
 {
     if (!arr[row])
@@ -109,7 +130,7 @@ void    ft_fill(char *arr, const char *str, size_t letters, size_t *reel)
  * 
  * */
 
-char **split_reel(const char *str, char c, size_t *reel)
+char **split_reel(const char *str, char c, size_t reel)
 {
     char **spine;
     
@@ -126,11 +147,11 @@ char **split_reel(const char *str, char c, size_t *reel)
     p = 0;
     while (p < (cuts))
     {
-        letters = ft_reels(str, c, reel);
+        letters = ft_reels(str, c, &reel);
         spine[p] = (char *)malloc(sizeof(char) * (letters + 1));
         error_matrix_free(spine, p);
-        ft_fill(spine[p], str, letters, reel);
-        *reel += letters;
+        ft_fill(spine[p], str, letters, &reel);
+        reel += letters;
         p++;
     }
     spine[p] = NULL;
@@ -165,47 +186,74 @@ char *select_env(char **env)
     return (NULL);
 }
 
+size_t	ft_strlen(const char *str)
+{
+	size_t	a;
+
+	a = 0;
+	while (*(str + a) != '\0')
+		a++;
+	return (a);
+} 
+
+char	*ft_strjoin_slash(const char *s1, const char *s2)
+{
+	char	*sjoin;
+	size_t	size;
+	size_t	i;
+	size_t	j;
+
+	if (s1 == 0 || s2 == 0)
+		return (0);
+	size = ft_strlen(s1) + ft_strlen(s2) + 2; // Añado un espacio extra para el slash
+	sjoin = (char *)malloc(size * sizeof(char));
+	if (sjoin == 0)
+		return (0);
+	i = -1;
+	while (++i < ft_strlen(s1))
+        sjoin[i] = s1[i];
+    sjoin[i] = '/'; // Le colocamos el slash
+    i++;
+	j = -1;
+	while (++j < ft_strlen(s2))
+        sjoin[i + j] = s2[j];
+	sjoin[i + j] = '\0';
+	return (sjoin);
+}
+/**/
+char *filepath_generator(char **argv, char **env)
+{
+    char **arguments;
+    int a_row;
+    char **paths;
+    int row;
+    char *target_path;
+ 
+    arguments = split_reel(argv[1], ' ', 0);
+    a_row = 0;
+    while (arguments[a_row] != NULL)
+        a_row++;
+    paths = split_reel(select_env(env), ':',5);
+    row = -1;
+    while (paths[++row] != NULL)
+    {
+        target_path = ft_strjoin_slash(paths[row], arguments[0]);
+        if (access(target_path, X_OK || F_OK) == 0)
+            return (target_path);
+        free(target_path);
+        target_path = NULL;
+    }
+    matrix_free(arguments, a_row);
+    matrix_free(paths, row);
+    return (NULL);
+}
+
 int main(int argc, char **argv, char **env)
 {
-    printf("Parámetros %i", argc);
-    int a;
-    a = -1;
-    while (argv[++a])
-        printf("argv - %s -->\n", argv[a]);
-    // ./a.out grep
+    printf("Parámetros %i\n", argc);    
+   
+    char *t = filepath_generator(argv, env);
+    printf("Paht: %s\n", t);
 
-    //char *chain = "hola holas hola hola ";
-    //char *chain = " hola mundo como esta hoy ";
-    //char *chain = "hola lolo";
-    //char *chain = "hola holas hola hola ";
-    
-    //char *cmd = argv[1];
-    //char sl = '/';
-    char *chain = select_env(env);
-    int c = ':';
-    size_t reel = 5;
-    char **arr = split_reel(chain, c, &reel);
-    //char **arr = split_reel(chain, c, (size_t *)5); No admite casting
-    int row = 0;
-    while (arr[row] != NULL)
-    {
-        printf("Matriz %i \n", row);
-        printf("\n %s \n", arr[row]);
-        row++;
-    }
-    /** FREE MATRIX */
-    while (row-- > 0)
-    {
-        if (arr[row])
-        {
-            free(arr[row]);
-            arr[row] = NULL;
-        }
-    }
-    if (arr)
-    {
-        free(arr);
-        arr = NULL;
-    }
     return (0);
 }

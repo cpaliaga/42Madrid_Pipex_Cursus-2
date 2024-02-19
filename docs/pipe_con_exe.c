@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:29:52 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/18 19:19:43 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:01:26 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int main (void)
     if (pid2 < 0)
         return (1);
         
-    if (pid2 == 0)  //  SEGUNDO PROCESO HIJO. («grep»).
+    if (pid2 == 0)  //  SEGUNDO PROCESO HIJO. 
     {
         dup2(fd[0], STDIN_FILENO); // READ pasa a ser la salida estandar.
         close(fd[0]);

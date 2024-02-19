@@ -58,16 +58,12 @@ char	*ft_strjoin_slash(const char *s1, const char *s2)
 		return (0);
 	i = -1;
 	while (++i < ft_strlen(s1))
-	{
-		sjoin[i] = s1[i];
-	}
+        sjoin[i] = s1[i];
     sjoin[i] = '/'; // Le colocamos el slash se va a 26 líneas
     i++;
 	j = -1;
 	while (++j < ft_strlen(s2))
-	{
-		sjoin[i + j] = s2[j];
-	}
+        sjoin[i + j] = s2[j];
 	sjoin[i + j] = '\0';
 	return (sjoin);
 }
