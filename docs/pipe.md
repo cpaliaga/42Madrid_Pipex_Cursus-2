@@ -1,3 +1,3 @@
 ## COMO FUNCIONA
     En desarollo
-    ![Estrella](/star.svg)
+    ![Estrella](star.png)
