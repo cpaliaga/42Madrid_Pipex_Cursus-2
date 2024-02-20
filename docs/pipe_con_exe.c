@@ -6,16 +6,20 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:29:52 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/19 18:51:08 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:03:29 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h> // System calls - family exec 
+#include <unistd.h> // System calls - family exec close ()
 #include <sys/wait.h>
 #include <errno.h>
+#include <fcntl.h> 
+// open() function #include <fcntl.h> https://man7.org/linux/man-pages/man2/open.2.html
+// open() function - Modos de Acceso: O_RDONLY, O_WRONLY, or O_RDWR
+// open() function - Permisos: 00700 user (file owner) has read, write, and execute.
 
 void exe_error_control(int exe)
 {   if (exe == -1)
@@ -26,29 +30,31 @@ void exe_error_control(int exe)
     }
 }
 
+int fd_openfile(char *url, char opt){
+    int fd;
+
+    if (opt == 'R')
+        fd = open(*url, O_RDONLY, 0770);
+    else
+        fd = open(*url, O_WRONLY, 0770);
+    if (fd == -1)
+        return (1);
+    return (fd);
+}
 
 int main (void)
 {
+    int fd_infile;
+    int fd_outfile;
     char *argVec1[]={"/bin/ls","-la", NULL}; // Parámetro de execve()
     char *argVec2[]={"/usr/bin/grep",".html", NULL}; // /usr/bin
-    char *ex_env[]={NULL};  // Parámetro de execve()
-    // "PATH=bin/:usr/bin/"
-    // "PATH=/bin/:/usr/bin/"
-    // "PATH=/bin:/usr/bin"
-
-    // PATH=/home/tonic_water/.local/bin:
-    // -->  /usr/local/sbin:
-    // -->  /usr/local/bin:
-    // -->  /usr/sbin:
-    // -->  /usr/bin:
-    // -->  /sbin:
-    // -->  /bin:
+    char *ex_env[]={NULL};  // Parámetro ENVIROMENT de execve()
 
     int fd[2];
     if (pipe(fd) == -1)
         return (1);
     
-    int pid1 = fork();
+    int pid1 = fork(); // CREACIÓN DEL PRIMER PROCESO HIJO.
     if (pid1 < 0)
         return (1);
     
@@ -62,7 +68,7 @@ int main (void)
     
     }
     
-    int pid2 = fork();
+    int pid2 = fork(); // CREACIÓN DEL SEGUNDO PROCESO HIJO.
     if (pid2 < 0)
         return (1);
         
@@ -75,7 +81,7 @@ int main (void)
         exe_error_control(ex2);
     }
     
-    // PROCESO PADRE.
+    // PROCESO PADRE
     close(fd[0]);
     close(fd[1]);
     
