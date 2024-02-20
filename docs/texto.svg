@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="170" height="165" viewBox="0 0 170 165">
+<text x="0" y="15" fill="red">I love SVG!</text>
+<text x="0" y="35" style="fill:green;font-weight:bold;stroke:red;stroke-width:1">I love W3Schools.com!</text>
+</svg>
