@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:29:52 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/20 11:03:29 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:59:04 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 // open() function - Modos de Acceso: O_RDONLY, O_WRONLY, or O_RDWR
 // open() function - Permisos: 00700 user (file owner) has read, write, and execute.
 
-void exe_error_control(int exe)
+void err_ctl(int exe)
 {   if (exe == -1)
     {
         printf("Número %i ", errno);
         perror(strerror(errno));
-        exit(1);
+        exit(EXIT_FAILURE); // exit(1);
     }
 }
 
@@ -64,7 +64,7 @@ int main (void)
         close(fd[0]); // Cierro READ O_RDONLY
         close(fd[1]); // Cierro WRITE O_WRONLY
         int ex1 = execve(argVec1[0], argVec1, ex_env);
-        exe_error_control(ex1);
+        err_ctl(ex1);
     
     }
     
@@ -78,7 +78,7 @@ int main (void)
         close(fd[0]);// Cierro READ O_RDONLY
         close(fd[1]);// Cierro WRITE O_WRONLY
         int ex2 = execve(argVec2[0], argVec2, ex_env);
-        exe_error_control(ex2);
+        err_ctl(ex2);
     }
     
     // PROCESO PADRE
