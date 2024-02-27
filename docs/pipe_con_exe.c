@@ -34,9 +34,9 @@ int fd_openfile(char *url, char opt){
     int fd;
 
     if (opt == 'R')
-        fd = open(*url, O_RDONLY, 0770);
+        fd = open(*url, O_RDONLY, 0777);
     else
-        fd = open(*url, O_WRONLY, 0770);
+        fd = open(*url, O_WRONLY, 0777);
     if (fd == -1)
         return (1);
     return (fd);
@@ -49,6 +49,18 @@ int main (void)
     char *argVec1[]={"/bin/ls","-la", NULL}; // Parámetro de execve()
     char *argVec2[]={"/usr/bin/grep",".html", NULL}; // /usr/bin
     char *ex_env[]={NULL};  // Parámetro ENVIROMENT de execve()
+
+    // Los file descriptors de las entradas y salidas 
+    // estandar son: 0 - STDIN 1- STDOUT y 2 - STDERR
+    // tras estos se numeran otros file descriptors,
+    // como por ejemplo los del archivo que se abre con open()
+    fd_infile = fd_openfile("infile", 'R');
+    printf("fd_infile: %i\n", fd_infile);
+    printf("fd_outfile: %i\n", fd_outfile);
+    fd_outfile = fd_openfile("outfile", 'W');
+
+    if (fd_infile == 1 || fd_outfile == 1)
+        return (1);
 
     int fd[2];
     if (pipe(fd) == -1)

@@ -16,28 +16,44 @@ https://en.wikipedia.org/wiki/File_descriptor
 /* tipo pid_t que no es mas que un identificador de proceso linux PID */
 #include <sys/wait.h> 
 // wait() function
-// #include <errno.h> // Variable errno
-// #include <stdlib.h> // exit() function.
-/** tr [OPTION]... SET1 [SET2]
- * Translate, squeeze (-s), and/or delete (-d) characters from 
- * standard input (keyboard), writing to standard output (screen).
-*/
+#include <errno.h> // Variable errno
+#include <stdlib.h> // exit() function.
+#include <fcntl.h> // O_RDONLY, O_WRONLY, O_RDWR
 
-/** Las funciones de la familia exec_() necesitan
- *  ocupar un proceso existente por ello */
+//** Las funciones de la familia exec_() necesitan
+// *  ocupar un proceso existente por ello
+
+// ** Control de errores EXIT_FAILURE *
+void err_ctl(int exe)
+{   if (exe == -1)
+    {
+        perror(strerror(errno));
+        exit(EXIT_FAILURE); // exit(1);
+    }
+}
+
+int fd_openfile(char *url, char opt)
+{
+    int fd;
+
+    if (opt == 'R')
+        fd = open(*url, O_RDONLY, 0770);
+    else
+        fd = open(*url, O_WRONLY, 0770);
+    if (fd == -1)
+        return (1);
+    return (fd);
+}
 
 int main(void)
 {
-    pid_t pid; /** Nos reparamos para clonar el proceso y tener un proceso hijo */
-    
     char *argVec[]={"/bin/ls","-la", NULL}; // Parámetro de execve()
     char *env[]={NULL};  // Parámetro de execve()
-
+    pid_t pid; /** Nos reparamos para clonar el proceso y tener un proceso hijo */
+    
     pid = fork(); /** Bifurcamos/clonamos el proceso para obtener el proceso hijo */
     if (pid == -1) /** Control de errores EXIT_FAILURE */
-    {
-        return(-1);
-    }
+        return(1);
 
     if (pid == 0) /* PROCESO HIJO */
     {
@@ -46,7 +62,7 @@ int main(void)
         * el procedimiento de main(). Todas las instrucciones 
         * a partir de este punto no se ejecutarán. Excepto que execve()
         * se ejecute en un proceso hijo de main() */
-       if (ex == -1) /** Control de errores EXIT_FAILURE */
+       if (ex == -1) 
        {
             perror("Error");
             /* exit(1); exit (int status) Produce la terminación del proceso actual */

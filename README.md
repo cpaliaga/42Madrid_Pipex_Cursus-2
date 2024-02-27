@@ -16,7 +16,7 @@ LISTADO DE FUNCIONES PERMITIDAS
 - execve(), 
 - exit(), 
 - fork(), 
-- pipe(), [¿Cómo funciona?](/docs/pipe.md/ "Pipe function")
+- pipe(), [¿Cómo funciona?](/docs/mkd/pipe.md/ "Pipe function")
 - unlink(), 
 - wait(), waitpid(),
 - ft_printf() and any equivalent YOU coded.
