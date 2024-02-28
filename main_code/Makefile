@@ -6,16 +6,16 @@
 #    By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 14:41:58 by caliaga-          #+#    #+#              #
-#    Updated: 2024/02/28 18:41:41 by caliaga-         ###   ########.fr        #
+#    Updated: 2024/02/28 20:45:35 by caliaga-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #### MACROS ####
-SRC_DIR = ./srcs/
-SRC_FILES = pipex.c util_error.c util_path..c util_split_reel.c
+SRC_DIR = ./
+SRC_FILES = pipex.c util_error.c util_path.c util_split_reel.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-INC_DIR = ./includes/
+INC_DIR = ./
 INC_FILES = pipex.h
 LIB = $(addprefix $(INC_DIR), $(INC_FILES))
 
@@ -29,8 +29,7 @@ NAME = pipex
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make all -C libft
-	gcc $(CFLAGS) $(SRCS) $(LIBA) -o $(NAME)
+	gcc $(CFLAGS) $(OBJ) -o $(NAME)
 	echo "«$(NAME)» created & indexed"
 
 $(filter-out %.o, $(SRC)): $(filter-out %.c, $(SRC))
