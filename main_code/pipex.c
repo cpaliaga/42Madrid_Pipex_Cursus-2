@@ -6,16 +6,17 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/28 17:46:01 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:37:03 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int fd_openfile(char *url, char opt){
-    int fd;
+int	fd_openfile(char *url, char opt)
+{
+	int	fd;
 
-    if (opt == 'R')
+	if (opt == 'R')
 	{
 		fd = open(url, O_RDONLY, 0777);
 		err_ctl(fd);
@@ -25,20 +26,20 @@ int fd_openfile(char *url, char opt){
 		fd = open(url, O_WRONLY, 0777);
 		err_ctl(fd);
 	}
-    return (fd);
+	return (fd);
 }
 
 void	exec(char *argv, char **env)
 {
 	char	**s_argv;
-	int 	s;
+	int		s;
 	char	*path;
 	int		exe;
 
 	s = 0;
 	s_argv = split_reel(argv, ' ', 0);
 	while (s_argv[s] != NULL)
-        s++;
+		s++;
 	path = filepath_generator(s_argv[0], env);
 	exe = execve(path, s_argv, env);
 	matrix_free(s_argv, s);
