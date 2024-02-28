@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_functions_family.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: caliaga- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/28 13:36:44 by caliaga-          #+#    #+#             */
+/*   Updated: 2024/02/28 13:37:11 by caliaga-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*
 Executing commands in C 
 https://www.youtube.com/watch?v=uh2FqejQRk8
@@ -25,7 +37,6 @@ int main(int argc, char *argv[], char *envp[])
     {
         /* CHILD PROCESS */
         execlp("ping", "ping", "-c", "3", "google.com", NULL);
-        //execlp("/usr/bin/ping", char *argv[], NULL);
         printf("Proceso HIJO terminado");
     }
     else

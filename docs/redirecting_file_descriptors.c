@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirecting_file_descriptors.c                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: caliaga- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/28 14:11:52 by caliaga-          #+#    #+#             */
+/*   Updated: 2024/02/28 14:11:54 by caliaga-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /** Redirecting standard output in C
  * https://www.youtube.com/watch?v=5fnVr-zH-SE
  * https://www.youtube.com/watch?v=rA7-c37WjXk
