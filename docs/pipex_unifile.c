@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/28 17:23:28 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:27:38 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char **matrix_free(char **arr, size_t row)
 {
     while (row-- > 0)
     {
-        if (arr[row])∫
+        if (arr[row])
         {
             free(arr[row]);
             arr[row] = NULL;
