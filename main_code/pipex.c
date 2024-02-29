@@ -17,14 +17,15 @@ int	fd_openfile(char *url, char opt)
 	int	fd;
 
 	if (opt == 'R')
-	{
-		fd = open(url, O_RDONLY, 0777);
-		err_ctl(fd);
-	}
+		fd = open(url, O_RDONLY);
 	else
+		fd = open(url, O_WRONLY | O_CREAT, 0777);
+	if (fd == -1)
 	{
-		fd = open(url, O_WRONLY, 0777);
-		err_ctl(fd);
+		write(2, "Error\n", 6);
+		perror(sterror(errno));
+		// sterror(errno);
+		exit(-1); // EXIT_FAILURE
 	}
 	return (fd);
 }
@@ -88,3 +89,4 @@ int	main(int argc, char **argv, char **env )
 
 //	./a.out infile "ls -l" "wc -l" outfile
 //	./a.out "grep a1" "wc -w" outfile
+//	env -i ./a.out infile "grep a1" "wc -w" outfile

@@ -10,6 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/** Handling Errors in C/Unix (perror, strerror, errno) 
+ * https://www.youtube.com/watch?v=IZiUT-ipnj0
+ * Error Handling | C Programming Tutorial 
+ * https://www.youtube.com/watch?v=OOuZLI5ingc
+ * Getting exit status code in C 
+ * https://www.youtube.com/watch?v=DiNmwwQWl0g
+*/
 #include <stdio.h>
 #include <string.h>
 #include <errno.h> // Variable global "errno" y "const char *sys_errlist[]""
