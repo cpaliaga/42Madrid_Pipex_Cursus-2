@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/28 18:37:03 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:18:33 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ int	fd_openfile(char *url, char opt)
 		fd = open(url, O_WRONLY | O_CREAT, 0777);
 	if (fd == -1)
 	{
-		write(2, "Error\n", 6);
-		perror(sterror(errno));
-		// sterror(errno);
-		exit(-1); // EXIT_FAILURE
+		//write(2, "Error open\n", 6);
+		perror(strerror(errno));
+		exit(1);
 	}
 	return (fd);
 }
@@ -76,6 +75,8 @@ int	main(int argc, char **argv, char **env )
 
 	if (argc != 5)
 		err_ctl(-1);
+	if (*env == NULL)
+		err_ctl(-1);
 	if (pipe(fd_pipe) == -1)
 		exit(EXIT_FAILURE);
 	pid = fork();
@@ -84,9 +85,11 @@ int	main(int argc, char **argv, char **env )
 	if (!pid)
 		child(fd_pipe, argv, env);
 	parent(fd_pipe, argv, env);
-	exit(0);
+	return(0);
 }
 
 //	./a.out infile "ls -l" "wc -l" outfile
 //	./a.out "grep a1" "wc -w" outfile
-//	env -i ./a.out infile "grep a1" "wc -w" outfile
+//	env -i ./pipex infile "grep 1" "wc -w" outfile
+// ./pipex infile "grep 1" "wc -w" outfile
+// >infile grep 1 | wc -w >outfile
