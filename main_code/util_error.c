@@ -3,20 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   util_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caliaga- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:48:29 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/28 17:58:05 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/03/05 20:26:55 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+void	open_err_ctl(int exe, char *url)
+{
+	if (exe == -1)
+	{
+		write(2, "zsh: ", 5);
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(2, ": ", 2);
+		write(2, url, ft_strlen(url));
+		write(2, "\n", 1);
+		exit(EXIT_FAILURE);
+	}
+}
+
 void	err_ctl(int exe)
 {
 	if (exe == -1)
 	{
-		perror(strerror(errno));
+		perror("");
 		exit(EXIT_FAILURE);
 	}
 }

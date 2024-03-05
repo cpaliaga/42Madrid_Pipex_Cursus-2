@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_with_execve.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caliaga- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:50:13 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/28 13:50:16 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/03/05 19:51:05 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ https://en.wikipedia.org/wiki/File_descriptor
 #include <errno.h> // Variable errno
 #include <stdlib.h> // exit() function.
 #include <fcntl.h> // O_RDONLY, O_WRONLY, O_RDWR
+#include <string.h>
 
 //** Las funciones de la familia exec_() necesitan
 // *  ocupar un proceso existente por ello
 
 // ** Control de errores EXIT_FAILURE *
+
+/*
 void err_ctl(int exe)
 {   if (exe == -1)
     {
@@ -56,10 +59,21 @@ int fd_openfile(char *url, char opt)
         return (1);
     return (fd);
 }
+*/
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	a;
+
+	a = 0;
+	while (*(str + a) != '\0')
+		a++;
+	return (a);
+}
 
 int main(void)
 {
-    char *argVec[]={"/bin/ls","-la", NULL}; // Parámetro de execve()
+    char *argVec[]={"/bin/lss","-la", NULL}; // Parámetro de execve()
     char *env[]={NULL};  // Parámetro de execve()
     pid_t pid; /** Nos reparamos para clonar el proceso y tener un proceso hijo */
     
@@ -76,11 +90,21 @@ int main(void)
         * se ejecute en un proceso hijo de main() */
        if (ex == -1) 
        {
-            perror("Error");
+        /**write(2, strerror(errno), ft_strlen(strerror(errno)));
+            perror("");
+         * 
+        */
+            
+             	write(2, "zsh", 3);
+                write(2, ": ", 2);
+                write(2, strerror(errno), ft_strlen(strerror(errno)));
+                write(2, "\n", 1);
+
             /* exit(1); exit (int status) Produce la terminación del proceso actual */
             /** status - El uso de EXIT_SUCCESS y EXIT_FAILURE es ligeramente 
              * más portable (para entornos no Unix) que el de 0 y algún 
              * valor distinto de cero como 1 o -1.*/
+            exit(1);
         };
     }
     else /* PROCESSO PADRE */

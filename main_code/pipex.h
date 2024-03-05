@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:41:24 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/28 18:32:54 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/03/05 20:27:40 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 char	**matrix_free(char **arr, size_t row);
 char	**error_matrix_free(char **arr, size_t row);
+void	open_err_ctl(int exe, char *url);
 void	err_ctl(int exe);
 size_t	ft_cuts(const char *str, int c);
 size_t	ft_reels(const char *str, char c, size_t *reel);

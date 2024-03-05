@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/03/05 17:57:03 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/03/05 20:27:04 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,7 @@ int	fd_openfile(char *url, char opt)
 		fd = open(url, O_RDONLY);
 	else
 		fd = open(url, O_WRONLY | O_CREAT, 0777);
-	if (fd == -1)
-	{
-		perror("zsh");
-		write(2, url, ft_strlen(url));
-		exit(1);
-	}
+	open_err_ctl(fd,url);
 	return (fd);
 }
 
