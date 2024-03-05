@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/29 22:18:33 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:57:03 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	fd_openfile(char *url, char opt)
 		fd = open(url, O_WRONLY | O_CREAT, 0777);
 	if (fd == -1)
 	{
-		//write(2, "Error open\n", 6);
-		perror(strerror(errno));
+		perror("zsh");
+		write(2, url, ft_strlen(url));
 		exit(1);
 	}
 	return (fd);
@@ -87,9 +87,3 @@ int	main(int argc, char **argv, char **env )
 	parent(fd_pipe, argv, env);
 	return(0);
 }
-
-//	./a.out infile "ls -l" "wc -l" outfile
-//	./a.out "grep a1" "wc -w" outfile
-//	env -i ./pipex infile "grep 1" "wc -w" outfile
-// ./pipex infile "grep 1" "wc -w" outfile
-// >infile grep 1 | wc -w >outfile
