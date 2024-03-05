@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:50:13 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/03/05 19:51:05 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:30:15 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ int main(void)
 
     if (pid == 0) /* PROCESO HIJO */
     {
+        /**
+        if (access(argVec[0], X_OK || F_OK) == 0)
+        {
+            perror("Acceso");  // No such file or directory
+            exit(1);
+        }
+        */
         int ex = execve(argVec[0], argVec, env); /** 
         * Una vez que se ejecute execve() sobreescribirá ∑overwrite∑ 
         * el procedimiento de main(). Todas las instrucciones 
@@ -90,16 +97,13 @@ int main(void)
         * se ejecute en un proceso hijo de main() */
        if (ex == -1) 
        {
-        /**write(2, strerror(errno), ft_strlen(strerror(errno)));
             perror("");
-         * 
-        */
-            
+            /*
              	write(2, "zsh", 3);
                 write(2, ": ", 2);
                 write(2, strerror(errno), ft_strlen(strerror(errno)));
                 write(2, "\n", 1);
-
+            */
             /* exit(1); exit (int status) Produce la terminación del proceso actual */
             /** status - El uso de EXIT_SUCCESS y EXIT_FAILURE es ligeramente 
              * más portable (para entornos no Unix) que el de 0 y algún 
