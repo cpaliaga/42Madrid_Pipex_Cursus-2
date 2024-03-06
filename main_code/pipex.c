@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/03/05 20:27:04 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:46:07 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	fd_openfile(char *url, char opt)
 	int	fd;
 
 	if (opt == 'R')
-		fd = open(url, O_RDONLY);
+		fd = open(url, O_RDONLY, 0777);
 	else
-		fd = open(url, O_WRONLY | O_CREAT, 0777);
-	open_err_ctl(fd,url);
+		fd = open(url, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	open_err_ctl(fd, url);
 	return (fd);
 }
 
@@ -36,18 +36,24 @@ void	exec(char *argv, char **env)
 	while (s_argv[s] != NULL)
 		s++;
 	path = filepath_generator(s_argv[0], env);
+	if (path == NULL)
+		err_ctl(-1, "Bad path");
 	exe = execve(path, s_argv, env);
 	matrix_free(s_argv, s);
-	err_ctl(exe);
+	err_ctl(exe, "Bad execution");
 }
 
 void	child(int *fd_pipe, char **argv, char **env)
 {
 	int		fd_in;
+	int		redir_in;
+	int		redir_out;
 
 	fd_in = fd_openfile(argv[1], 'R');
-	dup2(fd_in, STDIN_FILENO);
-	dup2(fd_pipe[1], STDOUT_FILENO);
+	redir_in = dup2(fd_in, STDIN_FILENO);
+	err_ctl(redir_in, "Child bad pipe in");
+	redir_out = dup2(fd_pipe[1], STDOUT_FILENO);
+	err_ctl(redir_out, "Child bad outfile");
 	close(fd_pipe[0]);
 	exec(argv[2], env);
 }
@@ -55,10 +61,14 @@ void	child(int *fd_pipe, char **argv, char **env)
 void	parent(int *fd_pipe, char **argv, char **env)
 {
 	int		fd_out;
+	int		redir_in;
+	int		redir_out;
 
 	fd_out = fd_openfile(argv[4], 'W');
-	dup2(fd_out, STDOUT_FILENO);
-	dup2(fd_pipe[0], STDIN_FILENO);
+	redir_out = dup2(fd_out, STDOUT_FILENO);
+	err_ctl(redir_out, "Parent bad outfile");
+	redir_in = dup2(fd_pipe[0], STDIN_FILENO);
+	err_ctl(redir_in, "Parent bad pipe in");
 	close(fd_pipe[1]);
 	exec(argv[3], env);
 }
@@ -69,9 +79,9 @@ int	main(int argc, char **argv, char **env )
 	pid_t	pid;
 
 	if (argc != 5)
-		err_ctl(-1);
+		err_ctl(-1, "Bad params");
 	if (*env == NULL)
-		err_ctl(-1);
+		err_ctl(-1, "No enviroment");
 	if (pipe(fd_pipe) == -1)
 		exit(EXIT_FAILURE);
 	pid = fork();
@@ -80,5 +90,5 @@ int	main(int argc, char **argv, char **env )
 	if (!pid)
 		child(fd_pipe, argv, env);
 	parent(fd_pipe, argv, env);
-	return(0);
+	return (0);
 }
