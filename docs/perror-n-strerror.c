@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 15:42:16 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/18 19:05:36 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:38:26 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
  * https://www.youtube.com/watch?v=DiNmwwQWl0g
 */
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <errno.h> // Variable global "errno" y "const char *sys_errlist[]""
 /** Cuanddo las funciones execve()) y access() no tienenn éxito (0),
@@ -36,8 +37,9 @@ int main()
 	while(i<=106)
 	{
 		printf("%i - %s\n", i, strerror(i));
-		perror(sys_errlist[i]);
-		perror(strerror(i));
+		write(2, &i, 1);
+		//perror(sys_errlist[i]);
+		//perror(strerror(i));
 		i++;
 	}
 	printf("%i", 108*17);

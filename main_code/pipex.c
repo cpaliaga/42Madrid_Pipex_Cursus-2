@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/03/19 13:04:15 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:34:11 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	fd_openfile(char *url, char opt)
 	int	fd;
 
 	if (opt == 'R')
-		fd = open(url, O_RDONLY, 0777);
+		fd = open(url, O_RDONLY);
 	else
 		fd = open(url, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	open_err_ctl(fd, url);
