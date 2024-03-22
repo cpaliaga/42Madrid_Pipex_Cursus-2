@@ -61,26 +61,24 @@ void pair_move_to_macht(char c, const char *s, int *start, int *len)
 int check_single(const char *s, int *start, int *len)
 {
     if (*start > *len) // la posición final no puede ser traspasada por la posición inicial.
-            return (-1); // control de errores.
+        return (-1); // control de errores.
 
     // Si start es igual a len : significa que 
     // o bien sólo se localizó una coincidencia del caracter y el recorrido se detubo ahí, 
     // ó bien que satart llegó a len sin encontrar ninguna coincidencia.
 
     if (*start == *len) // sólo se encontró una comilla simple ó ninguna comilla simple.
-            return (-1); // no son ó no hay comillas de cierre.
+        return (-1); // no son ó no hay comillas de cierre.
     
     // Si start es uno menor que len : significa que
     // el carácter se localizó por duplicado pero de manera contigua, 
     // sin otros carácteeres entre ambas coincidencias.
 
     if ((*start + 1) == *len) // las coincidencias encontradas son consecutivas.
-            return (1); // nos encontramos ante un caso de cadena vacía.
+        return (1); // nos encontramos ante un caso de cadena vacía.
     
     if (s[*start] == 39 && s[*len] == 39)
-    {
         return (0); // comillas de cierre detectadas.
-    }
 }
 
 int check_doble(const char *s, int *start, int *len)
@@ -182,3 +180,6 @@ int main()
 */
     return (0);
 }
+
+// gcc -Wall -Wextra -Werror pair_quotes.c -o pair_quotes
+// ./pair_quotes
