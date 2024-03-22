@@ -79,6 +79,7 @@ int check_single(const char *s, int *start, int *len)
     
     if (s[*start] == 39 && s[*len] == 39)
         return (0); // comillas de cierre detectadas.
+    return (-1); // error por defecto.
 }
 
 int check_doble(const char *s, int *start, int *len)
@@ -87,59 +88,30 @@ int check_doble(const char *s, int *start, int *len)
         return (-1); // control de errores.
 
     if (*start == *len) // sólo se encontró una comilla simple ó ninguna comilla simple.
-            return (-1); // no son ó no hay comillas de cierre.
+        return (-1); // no son ó no hay comillas de cierre.
 
     if ((*start + 1) == *len) // las coincidencias encontradas son consecutivas.
-            return (1); // nos encontramos ante un caso de cadena vacía.
+        return (1); // nos encontramos ante un caso de cadena vacía.
     
     if (s[*start] == 34 && s[*len] == 34)
-    {
         return (0); // comillas de cierre detectadas.
-    }
-
+    return (-1); // error por defecto.
 }
 
 int quotes_close(const char *s, int *start, int *len)
-{    
+{
+    // PARSEO DE COMILLAS SIMPLES '\'' ó ascii 39
     // restableccer los parámetros y localizar el final de la cadena.
     reset_str_param(s, start, len);
-    
-    // PARSEO DE COMILLAS SIMPLES '\'' ó ascii 39
     pair_move_to_macht('\'', s, start, len);
-    //printf("MA start %i len %i \n", start, len);
-    if (*start > *len) // la posición final no puede ser traspasada por la posición inicial.
-            return (-1); // control de errores.
-    // Si start es igual a len : significa que 
-    // o bien sólo se localizó una coincidencia del caracter y el recorrido se detubo ahí, 
-    // ó bien que satart llegó a len sin encontrar ninguna coincidencia.
-    if (*start == *len) // sólo se encontró una comilla simple ó ninguna comilla simple.
-            return (-1); // no son ó no hay comillas de cierre.
-    
-    // Si start es uno menor que len : significa que
-    // el carácter se localizó por duplicado pero de manera contigua, 
-    // sin otros carácteeres entre ambas coincidencias.
+    check_single(s, start, len);
 
-    if ((*start + 1) == *len) // las coincidencias encontradas son consecutivas.
-            return (1); // nos encontramos ante un caso de cadena vacía.
-    
-    if (s[*start] == 39 && s[*len] == 39)
-    {
-        return (0); // comillas de cierre detectadas.
-    }
-/** 
     // PARSEO DE COMILLAS DOBLES '\"' ó ascii 34
-    pair_move_to_macht('\"', s, &start, &len);
-    if (start > len) // la posición final no puede ser traspasada por la posición inicial.
-        return (-1); // control de errores.
-    if (start == len) // sólo se encontró una comilla simple ó ninguna comilla simple.
-        return (-1); // no son ó no hay comillas de cierre.
-    if ((start + 1) == len) // las coincidencias encontradas son consecutivas.
-            return (1); // nos encontramos ante un caso de cadena vacía.
-    if (s[start] == 34 && s[len] == 34)
-    {
-        return (0); // comillas de cierre detectadas.
-    }
-*/
+    // restableccer los parámetros y localizar el final de la cadena.
+    reset_str_param(s, start, len);
+    pair_move_to_macht('\'', s, start, len);
+    check_single(s, start, len);   
+
     return (-1); // error por defecto.
 }
 
@@ -171,13 +143,13 @@ int main()
     char *c04 = "hola mmundo sd ";
     int q04 = quotes_close(c04, &start04, &len04);
     printf("Prueba 04 :%i \n",q04);
-/** 
+
     printf("Comillas Dobles\n");
     int start05, len05;
     char *c05 = "hola \"mm\"undo sd ";
     int q05 = quotes_close(c05, &start05, &len05);
     printf("Prueba 05 :%i \n",q05);
-*/
+
     return (0);
 }
 
