@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-size_t	ft_cuts(const char *str, int c)
+static size_t	ft_cuts(const char *str, int c)
 {
 	size_t	cut[2];
 
@@ -31,7 +31,7 @@ size_t	ft_cuts(const char *str, int c)
 	return (cut[1]);
 }
 
-size_t	ft_reels(const char *str, char c, size_t *reel)
+static size_t	ft_reels(const char *str, char c, size_t *reel)
 {
 	size_t	dim[3];
 
@@ -58,7 +58,7 @@ size_t	ft_reels(const char *str, char c, size_t *reel)
 	return (dim[1]);
 }
 
-void	ft_fill(char *arr, const char *str, size_t letters, size_t *reel)
+static void	ft_fill(char *arr, const char *str, size_t letters, size_t *reel)
 {
 	size_t	l;
 	size_t	clone;

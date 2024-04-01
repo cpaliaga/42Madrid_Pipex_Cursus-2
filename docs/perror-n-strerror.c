@@ -16,6 +16,8 @@
  * https://www.youtube.com/watch?v=OOuZLI5ingc
  * Getting exit status code in C 
  * https://www.youtube.com/watch?v=DiNmwwQWl0g
+ * The Importance of Error Handling in C
+ * https://www.youtube.com/watch?v=A9bPqlgbUvg&t=142s
 */
 #include <stdio.h>
 #include <unistd.h>

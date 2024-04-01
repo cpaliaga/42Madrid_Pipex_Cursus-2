@@ -1,3 +1,15 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+/**
+ * #include "util_split_reel.c"
+
+char	**split_reel(const char *str, char c, size_t reel);
+*/
+
+
+
 char *set_command(const char *s, int *ix)
 {
 	int		cm;
@@ -9,7 +21,7 @@ char *set_command(const char *s, int *ix)
 		cm++;
 	comm = (char *)malloc(sizeof(char) * (cm + 1));
 	if (!comm)
-		err_ctl(-1, "Bad malloc");
+		return(NULL);
 	i = 0;
 	while (i < cm)
 	{
@@ -21,7 +33,44 @@ char *set_command(const char *s, int *ix)
 	return (comm);
 }
 
-char **parse_params(const char *s)
+/** 
+char *count_quotes(const char *s, int *ix)
+{
+	int j;
+	int count;
+	int scount;
+	int dcount;
+
+
+	j = 0;
+	count = 0;
+	scount = 0;
+	dcount = 0;
+
+	while (s[*ix + j] != '\0')
+	{
+		if (s[*ix + j] == '\'')
+		{
+			scount++;
+			count++;
+		}
+		if (s[*ix + j] == '\"')
+			dcount++;
+			count++;
+
+		j++;
+	}
+	if (count % 2 != 0)
+	{
+		printf("Error: Quotes are not even\n");
+		return (NULL);
+	}
+
+}
+*/
+
+/**
+ * char **parse_params(const char *s)
 {
 	int		cm;
 	int		ix;
@@ -31,6 +80,7 @@ char **parse_params(const char *s)
 
 	ix = 0;
 	comm = set_command(s, &ix);
+    printf("comm = %s\n", comm);
 
 
 	q_argv = split_reel(s, '\'', ix);
@@ -54,7 +104,10 @@ char **parse_params(const char *s)
 	argv[i + 1] = NULL;
 	return (argv);
 
-}
+} 
+*/
+
+
 
 int main(int argc, char **argv)
 
@@ -64,6 +117,12 @@ int main(int argc, char **argv)
         printf("Usage: %s <string>\n", argv[0]);
         return (1);
     }
+
+    int ix = 0;
+    char *com = set_command(argv[1], &ix);
+    printf("comm = %s , ix = %i \n", com, ix);
+    printf("argv[1] = %s\n", argv[1]);
+    /**
     char **params = parse_params(argv[1]);
     int i = 0;
     while (params[i] != NULL)
@@ -71,8 +130,37 @@ int main(int argc, char **argv)
         printf("params[%d] = %s\n", i, params[i]);
         i++;
     }
+    */
     return (0);
 }
 
-// gcc -Wall -Wextra -Werror parse_params.c -o parse_params
-// ./parse_params "ls -l 'hello world' -a"
+
+// COMPILACIÓN      gcc -Wall -Wextra -Werror parse_params.c -o parse_params
+// EJECUTAR         ./parse_params "ls -l 'hello world' -a"
+
+// EJECUTAR         ./parse_params "tr ' ' '\n'"
+// tengo 4 comillas, patrón aa aa
+
+// EJECUTAR         ./parse_params "awk '{print $1}'"
+// tengo 2 comillas patrón aa.
+
+//  cat /etc/passwd | awk -F ":" '{print $1}'
+// tengo cuatro comillas patrón bb aa.
+// EJECUTAR         ./parse_params "awk -F ":" '{print $1}'"
+// Recibo Error     awk -F : '{print }'
+// EJECUTAR         ./parse_params "awk -F ':' '{print $1}'"
+// Recibo           awk -F ':' '{print }'
+// EJECUTAR         ./parse_params 'awk -F ":" '{print $1}''
+// Recibo Error     Usage: ./parse_params <string>
+// EJECUTAR         ./parse_params "awk -F \":\" '{print \$1}'"
+// Recibo Exacto    awk -F ":" '{print $1}'
+
+//	El programa «awk» puede admitir «flags» con un parámertro entre comillas dobles,
+//	y los programas cortos generalmente se ingresan en la línea de comando
+//	encerrado en comila simples para evitar la interpretación del shell.
+//	Se pueden realizar programas más largos leer desde un archivo con la opción -f.
+
+// Patrón de comillas todas iguales en número par: "" "" ó '' ''
+// Patrón de comillas diferenctes en número par: "" '' ó '' ""
+
+//  https://geekland.eu/uso-del-comando-awk-en-linux-y-unix-con-ejemplos/
