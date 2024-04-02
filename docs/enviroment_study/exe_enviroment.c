@@ -6,50 +6,57 @@
 // wait() function
 #include <errno.h> // Variable errno
 #include <stdlib.h> // exit() function.
-#include <fcntl.h> // O_RDONLY, O_WRONLY, O_RDWR
 #include <string.h>
 
 //** Las funciones de la familia exec_() necesitan
 // *  ocupar un proceso existente por ello
 
-// ** Control de errores EXIT_FAILURE *
+/**
+ * 
 
-/*
-void err_ctl(int exe)
-{   if (exe == -1)
+size_t fd_bytesToRead(int fd)
+{
+ 
+    size_t bytesRead;
+    char buffer[32];
+    int rd;
+
+    rd = 1;
+    bytesRead = 0;
+    // Cuando el read retorne 0, significa que ya no hay nada que leer 
+    // y que hemos llegado al final del fichero.
+    while (rd != 0)
     {
-        perror(strerror(errno));
-        exit(EXIT_FAILURE); // exit(1);
+        rd = read(fd, buffer, sizeof(buffer));
+        bytesRead = bytesRead + rd;
+     
     }
+    return (bytesRead);
 }
 
-int fd_openfile(char *url, char opt)
+char *fd_read(int fd ,size_t bRead)
 {
-    int fd;
+    int fd_read;
+    char *buffer;
 
-    if (opt == 'R')
-        fd = open(*url, O_RDONLY, 0770);
-    else
-        fd = open(*url, O_WRONLY, 0770);
-    if (fd == -1)
-        return (1);
-    return (fd);
+    buffer = (char *)malloc(bRead);
+	if (!buffer)
+		return (NULL);
+    fd_read = read(fd, buffer, bRead);
+    if (fd_read == -1)
+    {
+        perror("Error: ");
+        return(NULL);
+    }
+    return (buffer);
 }
 */
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	a;
-
-	a = 0;
-	while (*(str + a) != '\0')
-		a++;
-	return (a);
-}
-
 int main(void)
 {
-    char *argVec[]={"/bin/lss","-la", NULL}; // Parámetro de execve()
+    char *argVec[]={"/usr/bin/env", NULL}; // Parámetro de execve() /bin/ls     /usr/bin/env
+    // En este caso el comando ls sí tieene su stdout por pantalla
+    // pero el comando env no hace stdour por pantalla.
     char *env[]={NULL};  // Parámetro de execve()
     pid_t pid; /** Nos reparamos para clonar el proceso y tener un proceso hijo */
     
@@ -59,20 +66,10 @@ int main(void)
 
     if (pid == 0) /* PROCESO HIJO */
     {
-        /**
-        if (access(argVec[0], X_OK || F_OK) == 0)
+        int ex = execve(argVec[0], argVec, env);
+        printf("exe %i \n", ex);
+        if (ex == -1)
         {
-            perror("Acceso");  // No such file or directory
-            exit(1);
-        }
-        */
-        int ex = execve(argVec[0], argVec, env); /** 
-        * Una vez que se ejecute execve() sobreescribirá ∑overwrite∑ 
-        * el procedimiento de main(). Todas las instrucciones 
-        * a partir de este punto no se ejecutarán. Excepto que execve()
-        * se ejecute en un proceso hijo de main() */
-       if (ex == -1) 
-       {
             perror("");
             exit(1);
         };
