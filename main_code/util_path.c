@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:59:03 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/02 18:50:33 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/02 19:44:39 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,6 @@ char	*ft_strjoin_slash(const char *s1, const char *s2)
 		sjoin[i + j] = s2[j];
 	sjoin[i + j] = '\0';
 	return (sjoin);
-}
-
-char	*check_argv(const char *argv, char **env)
-{
-	return (NULL);
 }
 
 char	*filepath_generator(const char *argv, char **env)
