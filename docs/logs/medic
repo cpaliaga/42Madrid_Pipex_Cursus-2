@@ -183,9 +183,7 @@ total 56
 pipex: fizzBuzz: command not found
 \EOF
 
- - Pipex standard stream:
-zsh: command not found: fizzBuzz
-\EOF
+ - Pipex standard stream: None
 
  - Bash exit code value: 0
 
@@ -210,13 +208,11 @@ File permissions of output files match
 pipex: buzzFizz: command not found
 \EOF
 
- - Pipex standard stream:
-zsh: command not found: buzzFizz
-\EOF
+ - Pipex standard stream: None
 
  - Bash exit code value: 127
 
- - Pipex exit code value: 1
+ - Pipex exit code value: 11
 
 File permissions of output files match
 
@@ -242,7 +238,7 @@ pipex: fizzBuzz: command not found
 \EOF
 
  - Pipex standard stream:
-zsh: command not found: fizzBuzz
+env: fizzBuzz: No such file or directory
 \EOF
 
  - Bash exit code value: 0
@@ -269,7 +265,7 @@ pipex: buzzFizz: command not found
 \EOF
 
  - Pipex standard stream:
-zsh: command not found: buzzFizz
+env: buzzFizz: No such file or directory
 \EOF
 
  - Bash exit code value: 127

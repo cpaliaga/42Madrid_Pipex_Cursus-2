@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:59:03 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/02 17:58:37 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:50:33 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,11 @@ char	*ft_strjoin_slash(const char *s1, const char *s2)
 	return (sjoin);
 }
 
+char	*check_argv(const char *argv, char **env)
+{
+	return (NULL);
+}
+
 char	*filepath_generator(const char *argv, char **env)
 {
 	char	**paths;
@@ -94,7 +99,7 @@ char	*filepath_generator(const char *argv, char **env)
 		target_path = NULL;
 	}
 	matrix_free(paths, row);
-	if (env[1][0] == 'K')
+	if (env[1] == NULL)
 		command_err_env(-1, argv);
 	command_err_ctl(-1, argv);
 	return (NULL);

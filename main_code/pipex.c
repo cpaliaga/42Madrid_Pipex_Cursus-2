@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/02 18:11:32 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:30:33 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ int	main(int argc, char **argv, char **env )
 	if (*env == NULL)
 	{
 		env[0] = "PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
-		env[1] = "KEY=env -i";
-		env[2] = NULL;
+		env[1] = NULL;
 	}
 	if (*env == NULL)
 		err_ctl(-1, "No enviroment");

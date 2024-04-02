@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 15:42:16 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/03/19 16:54:06 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/02 19:35:39 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int main()
 	int i;
 
 	i = 0;
-	while(i<=106)
+	while(i<=256)
 	{
 		printf("%i - %s\n", i, strerror(i));
 		i++;
