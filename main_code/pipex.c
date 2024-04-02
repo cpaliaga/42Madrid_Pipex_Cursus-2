@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/03/19 15:34:11 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:11:32 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	fd_openfile(char *url, char opt)
 	if (opt == 'R')
 		fd = open(url, O_RDONLY);
 	else
-		fd = open(url, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		fd = open(url, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	open_err_ctl(fd, url);
 	return (fd);
 }
@@ -80,6 +80,12 @@ int	main(int argc, char **argv, char **env )
 
 	if (argc != 5)
 		err_ctl(-1, "Bad params");
+	if (*env == NULL)
+	{
+		env[0] = "PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+		env[1] = "KEY=env -i";
+		env[2] = NULL;
+	}
 	if (*env == NULL)
 		err_ctl(-1, "No enviroment");
 	if (pipe(fd_pipe) == -1)

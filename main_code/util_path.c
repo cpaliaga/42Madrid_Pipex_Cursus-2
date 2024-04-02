@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:59:03 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/03/06 19:34:11 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:58:37 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ char	*filepath_generator(const char *argv, char **env)
 		target_path = NULL;
 	}
 	matrix_free(paths, row);
+	if (env[1][0] == 'K')
+		command_err_env(-1, argv);
 	command_err_ctl(-1, argv);
 	return (NULL);
 }

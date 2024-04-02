@@ -138,20 +138,23 @@ int main(int argc, char **argv)
 // COMPILACIÓN      gcc -Wall -Wextra -Werror parse_params.c -o parse_params
 // EJECUTAR         ./parse_params "ls -l 'hello world' -a"
 
-// EJECUTAR         ./parse_params "tr ' ' '\n'"
-// tengo 4 comillas, patrón aa aa
+// OK         ./parse_params "tr ' ' '\n'"
 
-// EJECUTAR         ./parse_params "awk '{print $1}'"
-// tengo 2 comillas patrón aa.
+// OK         ./parse_params "awk '{print $1}'"
+
 
 //  cat /etc/passwd | awk -F ":" '{print $1}'
 // tengo cuatro comillas patrón bb aa.
+
 // EJECUTAR         ./parse_params "awk -F ":" '{print $1}'"
 // Recibo Error     awk -F : '{print }'
+
 // EJECUTAR         ./parse_params "awk -F ':' '{print $1}'"
 // Recibo           awk -F ':' '{print }'
+
 // EJECUTAR         ./parse_params 'awk -F ":" '{print $1}''
 // Recibo Error     Usage: ./parse_params <string>
+
 // EJECUTAR         ./parse_params "awk -F \":\" '{print \$1}'"
 // Recibo Exacto    awk -F ":" '{print $1}'
 

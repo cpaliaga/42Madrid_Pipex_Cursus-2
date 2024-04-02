@@ -6,13 +6,13 @@
 #    By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 14:41:58 by caliaga-          #+#    #+#              #
-#    Updated: 2024/02/28 20:45:35 by caliaga-         ###   ########.fr        #
+#    Updated: 2024/04/02 18:03:11 by caliaga-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #### MACROS ####
 SRC_DIR = ./
-SRC_FILES = pipex.c util_error.c util_path.c util_split_reel.c
+SRC_FILES = pipex.c util_error.c util_path.c util_split_reel.c util_free.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 INC_DIR = ./

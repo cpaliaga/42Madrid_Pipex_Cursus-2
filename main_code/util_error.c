@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:48:29 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/03/06 19:49:19 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:53:22 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@ void	command_err_ctl(int exe, const char *url)
 	}
 }
 
+void	command_err_env(int exe, const char *url)
+{
+	if (exe == -1)
+	{
+		write(2, "env: ", 5);
+		write(2, url, ft_strlen(url));
+		write(2, ": No such file or directory", 27);
+		write(2, "\n", 1);
+		exit(EXIT_FAILURE);
+	}
+}
+
 void	err_ctl(int exe, char *msg)
 {
 	if (exe == -1)
@@ -43,43 +55,4 @@ void	err_ctl(int exe, char *msg)
 		perror(msg);
 		exit(EXIT_FAILURE);
 	}
-}
-
-char	**matrix_free(char **arr, size_t row)
-{
-	while (row-- > 0)
-	{
-		if (arr[row])
-		{
-			free(arr[row]);
-			arr[row] = NULL;
-		}
-	}
-	if (arr)
-	{
-		free(arr);
-		arr = NULL;
-	}
-	return (NULL);
-}
-
-char	**error_matrix_free(char **arr, size_t row)
-{
-	if (!arr[row])
-	{
-		while (row-- > 0)
-		{
-			if (arr[row])
-			{
-				free(arr[row]);
-				arr[row] = NULL;
-			}
-		}
-		if (arr)
-		{
-			free(arr);
-			arr = NULL;
-		}
-	}
-	return (NULL);
 }
