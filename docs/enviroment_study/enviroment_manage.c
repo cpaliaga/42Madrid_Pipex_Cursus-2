@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment_manage.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caliaga- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:49:27 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/28 13:49:29 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:47:50 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,19 @@ char	*ft_strjoin_slash(const char *s1, const char *s2)
 
 int main(int argc, char **argv, char **env)
 {
-    // ./a.out hola
-    
-    printf("Parámetros %i", argc);
+    /* env -i ./a.out hola 
+    if (env == NULL)
+    {
+        env[0] = "PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+    }
+    */
+    printf("Parámetros %i \n", argc);
     int a;
     a = -1;
     while (argv[++a])
-        printf("%s --> ", argv[a]);
-
+        printf("%s --> \n", argv[a]);
     char *ruta = select_env(env);
-    char *add = argv[1];
-    printf("1 -> %s | 2 -> %s \n", ruta, add);
-
+    printf("1 -> %s \n", ruta);
     printf("Join: %s\n", ft_strjoin_slash(ruta, argv[1]));
 
     return (0);
