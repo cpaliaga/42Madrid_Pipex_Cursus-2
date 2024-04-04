@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:41:24 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/02 17:55:36 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:16:11 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	**split_reel(const char *str, char c, size_t reel);
 char	*select_env(char **env);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin_slash(const char *s1, const char *s2);
+char	*check_argv(const char *argv);
 char	*filepath_generator(const char *argv, char **env);
 int		fd_openfile(char *url, char opt);
 void	exec(char *argv, char **env);

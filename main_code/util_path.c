@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:59:03 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/02 19:44:39 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:43:57 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,31 @@ char	*ft_strjoin_slash(const char *s1, const char *s2)
 	return (sjoin);
 }
 
+char	*check_argv(const char *argv)
+{
+	int		check;
+	int		i;
+	char	*target_path;
+
+	i = 0;
+	while (argv[i] != '\n')
+		i++;
+	target_path = (char *)malloc(sizeof(char) * (i + 1));
+	if (target_path == NULL)
+		return (NULL);
+	i = 0;
+	while (argv[i] != '\n')
+	{
+		target_path[i] = argv[1];
+		i++;
+	}
+	target_path[i] = '\0';
+	check = access(target_path, X_OK || F_OK);
+	if (check == 0)
+		return (target_path);
+	return (NULL);
+}
+
 char	*filepath_generator(const char *argv, char **env)
 {
 	char	**paths;
@@ -97,5 +122,6 @@ char	*filepath_generator(const char *argv, char **env)
 	if (env[1] == NULL)
 		command_err_env(-1, argv);
 	command_err_ctl(-1, argv);
-	return (NULL);
+	target_path = check_argv(argv);
+	return (target_path);
 }
