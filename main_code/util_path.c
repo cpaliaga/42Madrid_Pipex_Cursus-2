@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:59:03 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/04 19:57:27 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:27:08 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,22 @@ char	*ft_strjoin_slash(const char *s1, const char *s2)
 
 char	*check_argv(const char *argv)
 {
+	int len;
+	int len_paths;
 	char	**paths;
-	int		last;
+	char	*path;
 
-	
+	len = 0;
+	len_paths = 0;
+
 	paths = split_reel(argv, '/', 0);
-	last = 0;
-	while (paths[last] != NULL)
-		last++;
 	
+	while (paths[len_paths] != NULL)
+		len_paths++;
+	
+	path = paths[len_paths];
+	len = ft_strlen(paths[len_paths]);
+
 	printf("%i - %s \n", last, paths[last]);
 
 

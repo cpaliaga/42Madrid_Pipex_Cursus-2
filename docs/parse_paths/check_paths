@@ -1,0 +1,37 @@
+char	*check_argv(const char *argv)
+{
+	int     len;
+	int     len_paths;
+	char	**paths;
+	char	*path;
+
+	len = 0;
+	len_paths = 0;
+
+    if (argv != NULL)
+    {
+        paths = split_reel(argv, '/', 0);
+        while (paths[len_paths] != NULL)
+        {
+            len_paths++;
+        }
+
+    }
+	
+	
+	path = paths[len_paths];
+
+	len = ft_strlen(paths[len_paths]);
+
+
+	printf("%i - %s \n", last, paths[last]);
+
+	return (NULL);
+}
+
+int main(int argc, char **argv, char **env)
+{
+    const char *prueba_01 = check_argv(const char *argv);
+    printf("%s \n", check_argv(prueba_01));
+    return (0);
+}
