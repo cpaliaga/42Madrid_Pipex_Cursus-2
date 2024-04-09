@@ -99,6 +99,7 @@ char	*filepath_generator(const char *argv, char **env)
 	char	*target_path;
 	int		check;
 
+	
 	paths = split_reel(select_env(env), ':', 5);
 	row = -1;
 	while (paths[++row] != NULL)
