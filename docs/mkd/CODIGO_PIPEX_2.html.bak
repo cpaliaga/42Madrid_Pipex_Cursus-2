@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>CODIGO_PIPEX_2</title>
+    <style>
+      body{font-family: Loma; font-size: 80%;}
+      ol li{font-family: "Nimbus Mono PS", monospace;}
+    </style>
+  </head>
+  <body>
+    <p>CODIGO PIPEX 2</p>
+    <p>&nbsp;&nbsp;&nbsp; Pipex es un programa ejecutable, por lo que la función
+      principal será «main()». Vamos a tener un procedimiento padre donde
+      crearemos el «pipe()» que será heredado por los hijos. Los hijos se
+      ejecutarán antes que el padre por lo que el padre deberá esperar a los
+      hijos. Así mismo entre los hijos, se ejecutarán de forma de consecutiva.</p>
+    <ol>
+      <li>int&nbsp;&nbsp;&nbsp; main(int argc, char **argv, char **env )</li>
+      <li>{</li>
+      <li>&nbsp;&nbsp;&nbsp; int&nbsp;&nbsp; fd_pipe[2];</li>
+      <li>&nbsp;&nbsp;&nbsp; pid_t pid;</li>
+      <li><br>
+      </li>
+      <li>&nbsp;&nbsp;&nbsp; params_controls(argc, argv, env);</li>
+      <li>&nbsp;&nbsp;&nbsp; if <mark>(pipe(fd_pipe)</mark> == -1)</li>
+      <li>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; exit(EXIT_FAILURE);</li>
+      <li><br>
+      </li>
+      <li>&nbsp;&nbsp;&nbsp; <mark>pid = fork();<mark></mark></mark></li>
+      <li>&nbsp;&nbsp;&nbsp; if (pid == -1)</li>
+      <li>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; exit(EXIT_FAILURE);</li>
+      <li>&nbsp;&nbsp;&nbsp; if (pid == 0)</li>
+      <li>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; child(fd_pipe, argv, env);</li>
+      <li><br>
+      </li>
+      <li>&nbsp;&nbsp;&nbsp; <mark>pid = fork();<mark></mark></mark></li>
+      <li>&nbsp;&nbsp;&nbsp; if (pid == -1)</li>
+      <li>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; exit(EXIT_FAILURE);</li>
+      <li>&nbsp;&nbsp;&nbsp; if (pid == 0)</li>
+      <li>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; parent(fd_pipe, argv, env);</li>
+      <li><br>
+      </li>
+      <li>&nbsp;&nbsp;&nbsp; return (0);</li>
+      <li>}</li>
+    </ol>
+    <p> sssss </p>
+    <ol>
+      <li>void params_controls(int argc, char **argv, char **env)</li>
+      <li>{ </li>
+      <li>&nbsp;&nbsp;&nbsp; if (argc != 5)</li>
+      <li>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; err_ctl(-1, "Bad params");</li>
+      <li>&nbsp;&nbsp;&nbsp; if (argv[1][0] == )<br>
+      </li>
+      <li>&nbsp;&nbsp;&nbsp; if (*env == NULL)</li>
+      <li>&nbsp;&nbsp;&nbsp; {</li>
+      <li>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; env[0] =
+        "PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";</li>
+      <li>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; env[1] = NULL;</li>
+      <li>&nbsp;&nbsp;&nbsp; }</li>
+      <li>&nbsp;&nbsp;&nbsp; if (*env == NULL)</li>
+      <li>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; err_ctl(-1, "No enviroment");</li>
+      <li>}</li>
+    </ol>
+    <p> sssss </p>
+    <ol>
+      <li>int&nbsp;&nbsp;&nbsp; fd_openfile(char *url, char opt)</li>
+      <li>{</li>
+      <li>int&nbsp;&nbsp;&nbsp; fd;</li>
+      <li>if (opt == 'R')</li>
+      <li>fd = open(url, O_RDONLY);</li>
+      <li>else</li>
+      <li>fd = open(url, O_WRONLY | O_CREAT | O_TRUNC, 0644);</li>
+      <li>open_err_ctl(fd, url);</li>
+      <li>return (fd);</li>
+      <li>}</li>
+    </ol>
+    <p>ssssss</p>
+    <ol>
+      <li>void&nbsp;&nbsp;&nbsp; child(int *fd_pipe, char **argv, char **env)</li>
+      <li>{</li>
+      <li>int&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; fd_in;</li>
+      <li>int&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; redir_in;</li>
+      <li>int&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; redir_out;</li>
+      <li><br>
+      </li>
+      <li>fd_in = fd_openfile(argv[1], 'R');</li>
+      <li>redir_in = dup2(fd_in, STDIN_FILENO);</li>
+      <li>err_ctl(redir_in, "Child bad pipe in");</li>
+      <li>redir_out = dup2(fd_pipe[1], STDOUT_FILENO);</li>
+      <li>err_ctl(redir_out, "Child bad outfile");</li>
+      <li>close(fd_pipe[0]);</li>
+      <li>exec(argv[2], env);</li>
+      <li>}<br>
+      </li>
+    </ol>
+    <p>ssssssssssss</p>
+    <ol>
+      <li>void&nbsp;&nbsp;&nbsp; parent(int *fd_pipe, char **argv, char **env)</li>
+      <li>{</li>
+      <li>int&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; fd_out;</li>
+      <li>int&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; redir_in;</li>
+      <li>int&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; redir_out;</li>
+      <li><br>
+      </li>
+      <li>fd_out = fd_openfile(argv[4], 'W');</li>
+      <li>redir_out = dup2(fd_out, STDOUT_FILENO);</li>
+      <li>err_ctl(redir_out, "Parent bad outfile");</li>
+      <li>redir_in = dup2(fd_pipe[0], STDIN_FILENO);</li>
+      <li>err_ctl(redir_in, "Parent bad pipe in");</li>
+      <li>close(fd_pipe[1]);</li>
+      <li>exec(argv[3], env);</li>
+      <li>}</li>
+    </ol>
+    <p>ssssssssssssss </p>
+    <ol>
+      <li>void&nbsp;&nbsp;&nbsp; exec(char *argv, char **env)</li>
+      <li>{</li>
+      <li>char&nbsp;&nbsp;&nbsp; **s_argv;</li>
+      <li>int&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; s;</li>
+      <li>char&nbsp;&nbsp;&nbsp; *path;</li>
+      <li>int&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; exe;</li>
+      <li><br>
+      </li>
+      <li>s = 0;</li>
+      <li>s_argv = split_reel(argv, ' ', 0);</li>
+      <li>while (s_argv[s] != NULL)</li>
+      <li>s++;</li>
+      <li>path = filepath_generator(s_argv[0], env);</li>
+      <li>if (path == NULL)</li>
+      <li>err_ctl(-1, "Bad path");</li>
+      <li>exe = execve(path, s_argv, env);</li>
+      <li>matrix_free(s_argv, s);</li>
+      <li>err_ctl(exe, "Bad execution");</li>
+      <li>}<br>
+      </li>
+    </ol>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+  </body>
+</html>

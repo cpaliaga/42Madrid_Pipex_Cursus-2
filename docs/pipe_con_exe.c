@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
+#include <stdio.h> // printf()
 #include <string.h>
 #include <unistd.h> // System calls - family exec close ()
 #include <sys/wait.h>
@@ -36,9 +36,9 @@ int fd_openfile(char *url, char opt){
     if (opt == 'R')
         fd = open(*url, O_RDONLY, 0777);
     else
-        fd = open(*url, O_WRONLY, 0777);
+        fd = open(*url, O_WRONLY | O_CREATE | O_TRUNCATE, 0644);
     if (fd == -1)
-        return (1);
+        exit (1);
     return (fd);
 }
 

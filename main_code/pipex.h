@@ -20,6 +20,8 @@
 # include <string.h>
 # include <errno.h>
 # include <fcntl.h>
+#define READ    0
+#define WRITE   1
 
 char	**matrix_free(char **arr, size_t row);
 char	**error_matrix_free(char **arr, size_t row);
