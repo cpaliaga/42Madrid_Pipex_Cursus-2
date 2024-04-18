@@ -29,9 +29,37 @@ char	*check_argv(const char *argv)
 	return (NULL);
 }
 
+char	*filepath_generator(const char *argv, char **env)
+{
+	char	**paths;
+	int		row;
+	char	*target_path;
+	int		check;
+
+	
+	paths = split_reel(select_env(env), ':', 5);
+	row = -1;
+	while (paths[++row] != NULL)
+	{
+		target_path = ft_strjoin_slash(paths[row], argv);
+		check = access(target_path, X_OK || F_OK);
+		if (check == 0)
+			return (target_path);
+		free(target_path);
+		target_path = NULL;
+	}
+	matrix_free(paths, row);
+	if (env[1] == NULL)
+		command_err_env(-1, argv);
+	command_err_ctl(-1, argv);
+	return (target_path);
+}
+
 int main(int argc, char **argv, char **env)
 {
-    const char *prueba_01 = check_argv(const char *argv);
+    if (argc != 2)
+        return(1);
+    char *prueba_01 = check_argv(char *argv);
     printf("%s \n", check_argv(prueba_01));
     return (0);
 }
