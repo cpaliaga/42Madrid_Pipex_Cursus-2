@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:59:03 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/09 17:27:08 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:05:22 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,21 +92,23 @@ char	*check_argv(const char *argv, char	*target_path)
 }
 */
 
+char path(char *argv, char **env)
+{
+	
+}
+
 char	*filepath_generator(const char *argv, char **env)
 {
 	char	**paths;
 	int		row;
 	char	*target_path;
-	int		check;
 
-	
 	paths = split_reel(select_env(env), ':', 5);
 	row = -1;
 	while (paths[++row] != NULL)
 	{
 		target_path = ft_strjoin_slash(paths[row], argv);
-		check = access(target_path, X_OK || F_OK);
-		if (check == 0)
+		if (access(target_path, X_OK || F_OK) == 0)
 			return (target_path);
 		free(target_path);
 		target_path = NULL;
