@@ -20,6 +20,7 @@
 # include <string.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <stdint.h>
 #define READ    0
 #define WRITE   1
 
@@ -42,5 +43,8 @@ int		fd_openfile(char *url, char opt);
 void	exec(char *argv, char **env);
 void	child(int *fd_pipe, char **argv, char **env);
 void	parent(int *fd_pipe, char **argv, char **env);
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t count, size_t size);
+char	*ft_strdup(const char *s1);
 
 #endif

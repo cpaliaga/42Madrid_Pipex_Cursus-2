@@ -75,29 +75,22 @@ char	*ft_strjoin_slash(const char *s1, const char *s2)
 	return (sjoin);
 }
 
-char	*check_argv(const char *argv)
+/*
+char	*check_argv(const char *argv, char	*target_path)
 {
-	int len;
-	int len_paths;
-	char	**paths;
-	char	*path;
-
-	len = 0;
-	len_paths = 0;
-
-	paths = split_reel(argv, '/', 0);
+	if(access(target_path, X_OK || F_OK) == 0)
+		return (ft_strdup(target_path));
+	else
+	{
+		free(target_path);
+		target_path = NULL;
+		command_err_ctl(-1, argv);
+	}
 	
-	while (paths[len_paths] != NULL)
-		len_paths++;
-	
-	path = paths[len_paths];
-	len = ft_strlen(paths[len_paths]);
-
-	printf("%i - %s \n", last, paths[last]);
 
 
-	return (NULL);
 }
+*/
 
 char	*filepath_generator(const char *argv, char **env)
 {
@@ -122,6 +115,5 @@ char	*filepath_generator(const char *argv, char **env)
 	if (env[1] == NULL)
 		command_err_env(-1, argv);
 	command_err_ctl(-1, argv);
-	target_path = check_argv(argv);
 	return (target_path);
 }

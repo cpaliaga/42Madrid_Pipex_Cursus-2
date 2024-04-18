@@ -31,8 +31,8 @@ void	exec(char *argv, char **env)
 	char	*path;
 	int		exe;
 
-	s = 0;
 	s_argv = split_reel(argv, ' ', 0);
+	s = 0;
 	while (s_argv[s] != NULL)
 		s++;
 	path = filepath_generator(s_argv[0], env);

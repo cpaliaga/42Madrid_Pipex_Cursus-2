@@ -12,7 +12,7 @@
 
 #### MACROS ####
 SRC_DIR = ./
-SRC_FILES = pipex.c util_error.c util_path.c util_split_reel.c util_free.c
+SRC_FILES = pipex.c util_error.c util_path.c util_str.c util_split_reel.c util_free.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 INC_DIR = ./
