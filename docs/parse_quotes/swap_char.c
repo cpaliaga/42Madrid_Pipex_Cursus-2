@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *str)
 	return (a);
 }
 
-void is_quote(int pos[], int *p, char i, int *quotes)
+void find_quote(int pos[], int *p, char i, int *quotes)
 {
     quotes += 1;
     pos[p] = i;
@@ -45,15 +45,15 @@ int count_quotes(char *str, int type)
     while (str[i] != '\0')
     {
         if (str[i] == type && i == 0) // La comilla de apertura es LA PRIMERA.
-            is_quote(pos, &p, i, &quotes);
+            find_quote(pos, &p, i, &quotes);
         // La comilla de apertura tiene un ESPACIO ANTES. Puede ser comilla de cierre.
         // He tenido problemas de conteo con la expresión: str[i] == 39 && str[i - 1] == 32
         if (str[i] == 32 && str[i + 1] == type)
-            is_quote(pos, &p, i, &quotes);
+            find_quote(pos, &p, i, &quotes);
         if (str[i] == type && str[i + 1] == 32) // La comilla de cierre tiene un ESPACIO DESPUES.
-            is_quote(pos, &p, i, &quotes);
+            find_quote(pos, &p, i, &quotes);
         if (str[i] == type && i == (int)ft_strlen(str)-1) // La comilla de cierre es LA ULTIMA.
-            is_quote(pos, &p, i, &quotes);
+            find_quote(pos, &p, i, &quotes);
         i++;
     }
    return (quotes); 
