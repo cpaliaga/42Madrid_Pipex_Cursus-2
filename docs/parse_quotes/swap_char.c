@@ -24,52 +24,45 @@ size_t	ft_strlen(const char *str)
 	return (a);
 }
 
+void is_quote(int pos[], int *p, char i, int *quotes)
+{
+    quotes += 1;
+    pos[p] = i;
+    p += 1;
+}
+
 // CONTAR LAS COMILLAS DE UNA CADENA. type 39 o 34
 int count_quotes(char *str, int type)
 {
     int i;
     int quotes;
-    int len;
+    int pos[32];
+    int p;
 
-    len = ft_strlen(str);
+    p = 0;
     quotes = 0;
     i = 0;
     while (str[i] != '\0')
     {
         if (str[i] == type && i == 0) // La comilla de apertura es LA PRIMERA.
-            quotes++;
+            is_quote(pos, &p, i, &quotes);
         // La comilla de apertura tiene un ESPACIO ANTES. Puede ser comilla de cierre.
         // He tenido problemas de conteo con la expresión: str[i] == 39 && str[i - 1] == 32
         if (str[i] == 32 && str[i + 1] == type)
-            quotes++;
+            is_quote(pos, &p, i, &quotes);
         if (str[i] == type && str[i + 1] == 32) // La comilla de cierre tiene un ESPACIO DESPUES.
-            quotes++;
-        if (str[i] == type && i == len-1) // La comilla de cierre es LA ULTIMA.
-            quotes++;
+            is_quote(pos, &p, i, &quotes);
+        if (str[i] == type && i == (int)ft_strlen(str)-1) // La comilla de cierre es LA ULTIMA.
+            is_quote(pos, &p, i, &quotes);
         i++;
     }
    return (quotes); 
 }
 
-int *quote_position()
-{
-    int i;
-    int quotes[2];
-    int len;
-
-    quotes[0] = count_quotes(str, 39);
-    quotes[1] = count_quotes(str, 34);
-    len = ft_strlen(str);
-
-    if (quotes[0]%2 != 0)
-    {
-        printf("Las comillas están abiertas\n");
-    }
-        printf("Las comillas están cerradas\n");
-    printf("Len: %d, old %c new %c \n", len, old, new);
-    printf("\nQuotes: simples %d - doubles %d \n", quotes[0], quotes[1]);
-    return (quotes);
-}
+//int *quote_position()
+//{
+//    return (quotes);
+//}
 
 // Las comillas simpre han de tener una apertura y un cierre. Por lo que van por pares. 
 // El resto de dividir el número total de comillas por 2 será 0.
