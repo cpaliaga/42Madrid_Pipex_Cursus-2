@@ -17,27 +17,6 @@ void swap_char(char *str, int *i, char old, char new)
     }
 }
 
-void matrix_swap_char(char **str, char old, char new)
-{
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    if (str == NULL)
-        return;
-    while (str[i] != NULL)
-    {
-        while (str[j] != '\0')
-        {
-            if (str[j] == old)
-                str[j] = new;
-            j += 1;
-        }
-        i += 1;
-    }
-}
-
 size_t	ft_strlen(const char *str)
 {
 	size_t	a;
