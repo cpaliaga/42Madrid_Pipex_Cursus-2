@@ -1,21 +1,4 @@
-/* SWAP_CHAR.C */
 #include <stdio.h>
-
-// Coje mos un string y devolvemos un string modificadao.
-
-// Esta función localiza un carácter en un string y lo reemplaza por otro. 
-// Modifica el string original y Retorna void en caso de cadena nula. 
-void swap_char(char *str, int *i, char old, char new)
-{
-    if (str == NULL)
-        return;
-    while (str[*i] != '\0')
-    {
-        if (str[*i] == old)
-            str[*i] = new;
-        *i += 1;
-    }
-}
 
 void matrix_swap_char(char **str, char old, char new)
 {
@@ -70,41 +53,6 @@ int count_quotes(char *str, int type)
     }
    return (quotes); 
 }
-/**
-void find_quote(int *pos, int *p, char i)
-{
-    pos[*p] = i;
-    *p += 1;
-}
-// ARRAY CON LAS POSICIONES DE LAS COMILLAS
-int *quote_position(char *str, int type)
-{
-    int i;
-    int *quotes;
-    int pos[32];
-    int p;
-
-    p = 0;
-    quotes = 0;
-    i = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] == type && i == 0)
-            find_quote(pos, &p, i);
-        if (str[i] == 32 && str[i + 1] == type)
-            find_quote(pos, &p, i);
-        if (str[i] == type && str[i + 1] == 32)
-            find_quote(pos, &p, i);
-        if (str[i] == type && i == (int)ft_strlen(str)-1)
-            find_quote(pos, &p, i);
-        i++;
-    }
-    *quotes = *pos;
-    return (quotes);
-}
-*/
-// Las comillas simpre han de tener una apertura y un cierre. Por lo que van por pares. 
-// El resto de dividir el número total de comillas por 2 será 0.
 
 void quotes_swap_char(char *str, char old, char new)
 {
@@ -144,5 +92,3 @@ int main()
 
     return (0);
 }
-// "awk '{count++} END {print count}'"
-// gcc -Wall -Wextra -Werror swap_char.c -o Swap-Char && ./Swap-Char

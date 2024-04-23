@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:48:29 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/02 18:46:02 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:00:40 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	open_err_ctl(int exe, char *url)
 {
 	if (exe == -1)
 	{
-		write(2, "zsh: ", 5);
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-		write(2, ": ", 2);
+		write(2, "zsh: no such file or directory: ", 32);
 		write(2, url, ft_strlen(url));
 		write(2, "\n", 1);
 		exit(EXIT_FAILURE);
@@ -42,7 +40,7 @@ void	command_err_env(int exe, const char *url)
 	{
 		write(2, "env: ", 5);
 		write(2, url, ft_strlen(url));
-		write(2, ": No such file or directory", 27);
+		write(2, ": no such file or directory", 27);
 		write(2, "\n", 1);
 		exit(EXIT_FAILURE);
 	}

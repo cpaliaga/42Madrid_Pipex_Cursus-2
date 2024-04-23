@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/02 18:30:33 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:33:39 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	exec(char *argv, char **env)
 		path = filepath_generator(s_argv[0], env);
 	if (path == NULL)
 		err_ctl(-1, "Bad path");
-
 	if (execve(path, s_argv, env) == -1)
 		err_ctl(-1, "Bad execution");
 	matrix_free(s_argv, s_len);

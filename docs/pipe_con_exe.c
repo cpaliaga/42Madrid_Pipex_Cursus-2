@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:29:52 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/02/20 11:59:04 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:23:30 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 // open() function #include <fcntl.h> https://man7.org/linux/man-pages/man2/open.2.html
 // open() function - Modos de Acceso: O_RDONLY, O_WRONLY, or O_RDWR
 // open() function - Permisos: 00700 user (file owner) has read, write, and execute.
-
+// whence -p wc
 void err_ctl(int exe)
 {   if (exe == -1)
     {
@@ -30,37 +30,29 @@ void err_ctl(int exe)
     }
 }
 
-int fd_openfile(char *url, char opt){
-    int fd;
-
-    if (opt == 'R')
-        fd = open(*url, O_RDONLY, 0777);
-    else
-        fd = open(*url, O_WRONLY | O_CREATE | O_TRUNCATE, 0644);
-    if (fd == -1)
-        exit (1);
-    return (fd);
-}
-
 int main (void)
 {
     int fd_infile;
     int fd_outfile;
-    char *argVec1[]={"/bin/ls","-la", NULL}; // Parámetro de execve()
-    char *argVec2[]={"/usr/bin/grep",".html", NULL}; // /usr/bin
+
+    char *argVec1[]={"/bin/ls", "-la", NULL}; // /usr/bin/grep
+    //char *argVec2[]={"/usr/bin/wc","-l", NULL}; // /usr/bin
+    
+    // char *argVec1[]={"/bin/ls","-la", NULL}; // Parámetro de execve()
+    //char *argVec2[]={"/usr/bin/wc","-l", NULL}; // /usr/bin
+    char *argVec2[]={"/usr/bin/awk","{count++} END {print count}", NULL}; // /usr/bin
     char *ex_env[]={NULL};  // Parámetro ENVIROMENT de execve()
 
     // Los file descriptors de las entradas y salidas 
     // estandar son: 0 - STDIN 1- STDOUT y 2 - STDERR
     // tras estos se numeran otros file descriptors,
     // como por ejemplo los del archivo que se abre con open()
-    fd_infile = fd_openfile("infile", 'R');
-    printf("fd_infile: %i\n", fd_infile);
-    printf("fd_outfile: %i\n", fd_outfile);
-    fd_outfile = fd_openfile("outfile", 'W');
-
-    if (fd_infile == 1 || fd_outfile == 1)
-        return (1);
+    //fd_infile = fd_openfile("infile", 'R');
+    //printf("fd_infile: %i\n", fd_infile);
+    //printf("fd_outfile: %i\n", fd_outfile);
+    //fd_outfile = fd_openfile("outfile", 'W');
+    //if (fd_infile == 1 || fd_outfile == 1)
+    //    return (1);
 
     int fd[2];
     if (pipe(fd) == -1)
@@ -102,3 +94,5 @@ int main (void)
     
     return (0);
 }
+
+// gcc pipe_con_exe.c -o PP && ./PP

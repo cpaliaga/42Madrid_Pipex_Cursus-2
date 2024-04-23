@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-valgrind --leak-check=yes ./pipex infile "cat" "hostname" outfile
+# valgrind --leak-check=yes ./pipex infile "cat" "hostname" outfile
 
 echo "TEST 01 con cat y hostname"
 < infile cat | hostname > outfileA
@@ -58,7 +58,7 @@ ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
 rm outfileA && rm outfile
 
-echo "TEST 08 t29+30"
+echo "TEST 08 Comando con ruta completa"
 < infile wc -l | /bin/cat > outfileA
 ./pipex infile "wc -l" "/bin/cat" outfile
 diff outfileA outfile
@@ -74,10 +74,30 @@ ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
 rm outfileA && rm outfile
 
-echo "TEST 10”
+echo "TEST 10"
 env -i < infile noexisting | wc > outfileA
 env -i ./pipex infile "noexisting" "wc" outfile
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
 rm outfileA && rm outfile
+
+echo "TEST 11 Archivo de entradda erroneo"
+< iiinfile cat | hostname > outfileA
+./pipex iiinfile "cat" "hostname" outfile
+diff outfileA outfile
+ls -la outfileA && ls -la outfile
+cat outfileA && cat outfile
+rm outfileA && rm outfile
+
+echo "TEST 12 Comillas"
+< infile grep 1 | awk '{count++} END {print count}' > outfileA
+./pipex infile "grep 1" "awk '{count++} END {print count}'" outfile
+diff outfileA outfile
+ls -la outfileA && ls -la outfile
+cat outfileA && cat outfile
+rm outfileA && rm outfile
+
+#   < infile grep 1 | awk '{count++} END {print count}' > output
+# 4
+# ./pipex infile "grep 1" "awk '{count++} END {print count}'" outfile

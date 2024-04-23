@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:59:03 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/18 13:05:22 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:36:02 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ char	*select_env(char **env)
 	return (NULL);
 }
 
-int is_command_path(char *str)
+int	is_command_path(char *str)
 {
-    if (access(str, F_OK | X_OK) == -1)
-        return (-1);
-    return (0);
+	if (access(str, F_OK | X_OK) == -1)
+		return (-1);
+	return (0);
 }
 
 char	*filepath_generator(const char *argv, char **env)

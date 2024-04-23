@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:41:24 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/04 16:16:11 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:38:06 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <stdint.h>
-#define READ    0
-#define WRITE   1
+# define READ    0
+# define WRITE   1
 
 char	**matrix_free(char **arr, size_t row);
 char	**error_matrix_free(char **arr, size_t row);
@@ -35,7 +35,7 @@ size_t	ft_reels(const char *str, char c, size_t *reel);
 void	ft_fill(char *arr, const char *str, size_t letters, size_t *reel);
 char	**split_reel(const char *str, char c, size_t reel);
 char	*select_env(char **env);
-int     is_command_path(char *str);
+int		is_command_path(char *str);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin_slash(const char *s1, const char *s2);
 char	*check_argv(const char *argv);
