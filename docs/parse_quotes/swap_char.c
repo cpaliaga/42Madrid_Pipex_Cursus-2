@@ -1,3 +1,4 @@
+/* SWAP_CHAR.C */
 #include <stdio.h>
 
 // Esta función localiza un carácter en un string y lo reemplaza por otro. 

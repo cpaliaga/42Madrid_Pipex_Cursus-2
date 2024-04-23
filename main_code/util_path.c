@@ -75,26 +75,11 @@ char	*ft_strjoin_slash(const char *s1, const char *s2)
 	return (sjoin);
 }
 
-/*
-char	*check_argv(const char *argv, char	*target_path)
+int is_command_path(char *str)
 {
-	if(access(target_path, X_OK || F_OK) == 0)
-		return (ft_strdup(target_path));
-	else
-	{
-		free(target_path);
-		target_path = NULL;
-		command_err_ctl(-1, argv);
-	}
-	
-
-
-}
-*/
-
-char path(char *argv, char **env)
-{
-	
+    if (access(str, F_OK | X_OK) == -1)
+        return (-1);
+    return (0);
 }
 
 char	*filepath_generator(const char *argv, char **env)
