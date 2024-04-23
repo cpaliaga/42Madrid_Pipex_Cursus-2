@@ -78,6 +78,10 @@ int *quote_position(char *str, int type)
             find_quote(pos, &p, i);
         if (str[i] == type && i == (int)ft_strlen(str)-1)
             find_quote(pos, &p, i);
+        if (quotes % 2 != 0) 
+        {
+            printf("Las comillas están abiertas\n");
+        }
         i++;
     }
     *quotes = *pos;
