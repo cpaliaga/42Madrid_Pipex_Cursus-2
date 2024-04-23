@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:41:24 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/23 17:38:06 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:59:53 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_fill(char *arr, const char *str, size_t letters, size_t *reel);
 char	**split_reel(const char *str, char c, size_t reel);
 char	*select_env(char **env);
 int		is_command_path(char *str);
+int		space_betwen_quotes(char *str, int type);
+void	matrix_swap_char(char **str);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin_slash(const char *s1, const char *s2);
 char	*check_argv(const char *argv);

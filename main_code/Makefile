@@ -6,7 +6,7 @@
 #    By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 14:41:58 by caliaga-          #+#    #+#              #
-#    Updated: 2024/04/02 18:22:14 by caliaga-         ###   ########.fr        #
+#    Updated: 2024/04/23 22:19:40 by caliaga-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ NAME = pipex
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(CFLAGS) $(OBJ) -o $(NAME)
+	gcc $(CFLAGS) $(EFLAGS) $(OBJ) -o $(NAME)
 	echo "«$(NAME)» created & indexed"
 
 $(filter-out %.o, $(SRC)): $(filter-out %.c, $(SRC))

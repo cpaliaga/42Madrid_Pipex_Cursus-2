@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:59:03 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/23 17:36:02 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:21:17 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,53 @@ char	*filepath_generator(const char *argv, char **env)
 		command_err_env(-1, argv);
 	command_err_ctl(-1, argv);
 	return (target_path);
+}
+
+int	space_betwen_quotes(char *str, int type)
+{
+	int	i;
+	int	quotes;
+
+	quotes = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == type && i == 0)
+			quotes += 1;
+		if (str[i] == 32 && str[i + 1] == type)
+			quotes += 1;
+		if (str[i] == type && str[i + 1] == 32)
+			quotes += 1;
+		if (str[i] == type && i == (int)ft_strlen(str) - 1)
+			quotes += 1;
+		if (str[i + 1] != type)
+			if (quotes != 0 && quotes % 2 != 0)
+				if (str[i] == 32)
+					str[i] = 95;
+		if (str[i] == type)
+			str[i] = 32;
+		i++;
+	}
+	return (quotes);
+}
+
+void	matrix_swap_char(char **str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	//if (str == NULL)
+	//	return ;
+	while (str[i] != NULL)
+	{
+		while (str[i][j] != '\0')
+		{
+			if (str[i][j] == 95)
+				str[i][j] = 32;
+			j += 1;
+		}
+		i += 1;
+	}
 }

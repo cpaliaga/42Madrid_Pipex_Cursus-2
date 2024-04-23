@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/23 17:33:39 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:28:26 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	exec(char *argv, char **env)
 	int		s_len;
 	char	*path;
 
+	space_betwen_quotes(argv, 39);
 	s_argv = split_reel(argv, ' ', 0);
+	//printf("%s \n %s \n", s_argv[0], s_argv[1]);
+	matrix_swap_char(s_argv);
 	s_len = 0;
 	while (s_argv[s_len] != NULL)
 		s_len++;

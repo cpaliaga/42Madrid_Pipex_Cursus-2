@@ -101,3 +101,4 @@ rm outfileA && rm outfile
 #   < infile grep 1 | awk '{count++} END {print count}' > output
 # 4
 # ./pipex infile "grep 1" "awk '{count++} END {print count}'" outfile
+# lldb ./pipex infile "grep 1" "awk '{count++} END {print count}'" outfile
