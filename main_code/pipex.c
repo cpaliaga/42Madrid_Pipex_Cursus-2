@@ -27,20 +27,23 @@ int	fd_openfile(char *url, char opt)
 void	exec(char *argv, char **env)
 {
 	char	**s_argv;
-	int		s;
+	int		s_len;
 	char	*path;
-	int		exe;
 
 	s_argv = split_reel(argv, ' ', 0);
-	s = 0;
-	while (s_argv[s] != NULL)
-		s++;
-	path = filepath_generator(s_argv[0], env);
+	s_len = 0;
+	while (s_argv[s_len] != NULL)
+		s_len++;
+	if (is_command_path(s_argv[0]) == 0)
+		path = s_argv[0];
+	else
+		path = filepath_generator(s_argv[0], env);
 	if (path == NULL)
 		err_ctl(-1, "Bad path");
-	exe = execve(path, s_argv, env);
-	matrix_free(s_argv, s);
-	err_ctl(exe, "Bad execution");
+
+	if (execve(path, s_argv, env) == -1)
+		err_ctl(-1, "Bad execution");
+	matrix_free(s_argv, s_len);
 }
 
 void	child(int *fd_pipe, char **argv, char **env)

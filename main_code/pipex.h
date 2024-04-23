@@ -35,6 +35,7 @@ size_t	ft_reels(const char *str, char c, size_t *reel);
 void	ft_fill(char *arr, const char *str, size_t letters, size_t *reel);
 char	**split_reel(const char *str, char c, size_t reel);
 char	*select_env(char **env);
+int     is_command_path(char *str);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin_slash(const char *s1, const char *s2);
 char	*check_argv(const char *argv);

@@ -1,6 +1,41 @@
 /* UTIL_STR.C */
 #include "pipex.h"
 
+size_t	ft_strlen(const char *str)
+{
+	size_t	a;
+
+	a = 0;
+	while (*(str + a) != '\0')
+		a++;
+	return (a);
+}
+
+char	*ft_strjoin_slash(const char *s1, const char *s2)
+{
+	char	*sjoin;
+	size_t	size;
+	size_t	i;
+	size_t	j;
+
+	if (s1 == 0 || s2 == 0)
+		return (0);
+	size = ft_strlen(s1) + ft_strlen(s2) + 2;
+	sjoin = (char *)malloc(size * sizeof(char));
+	if (sjoin == 0)
+		return (0);
+	i = -1;
+	while (++i < ft_strlen(s1))
+		sjoin[i] = s1[i];
+	sjoin[i] = '/';
+	i++;
+	j = -1;
+	while (++j < ft_strlen(s2))
+		sjoin[i + j] = s2[j];
+	sjoin[i + j] = '\0';
+	return (sjoin);
+}
+
 void	ft_bzero(void *s, size_t n)
 {
 	char	*mem;

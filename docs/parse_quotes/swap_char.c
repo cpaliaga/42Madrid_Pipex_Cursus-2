@@ -1,6 +1,8 @@
 /* SWAP_CHAR.C */
 #include <stdio.h>
 
+// Coje mos un string y devolvemos un string modificadao.
+
 // Esta función localiza un carácter en un string y lo reemplaza por otro. 
 // Modifica el string original y Retorna void en caso de cadena nula. 
 void swap_char(char *str, int *i, char old, char new)
