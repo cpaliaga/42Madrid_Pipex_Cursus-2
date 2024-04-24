@@ -104,11 +104,11 @@ void	matrix_swap_char(char **str)
 	int	j;
 
 	i = 0;
-	j = 0;
-	//if (str == NULL)
-	//	return ;
+	if (str[0] == NULL)
+		return ;
 	while (str[i] != NULL)
 	{
+		j = 0;
 		while (str[i][j] != '\0')
 		{
 			if (str[i][j] == 95)

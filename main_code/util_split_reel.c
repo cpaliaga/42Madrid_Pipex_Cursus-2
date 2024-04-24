@@ -40,14 +40,14 @@ size_t	ft_reels(const char *str, char c, size_t *reel)
 		dim[0]++;
 	dim[1] = 0;
 	dim[2] = *reel;
-	while (str[dim[1] + dim[2]] == c)
+	while (str[dim[1] + dim[2]] == c && str)
 	{
 		if ((dim[1] + dim[2]) < dim[0])
 			dim[2]++;
 		else
 			break ;
 	}
-	while (str[dim[1] + dim[2]] != c)
+	while (str[dim[1] + dim[2]] != c && str)
 	{
 		if ((dim[1] + dim[2]) < dim[0])
 			dim[1]++;

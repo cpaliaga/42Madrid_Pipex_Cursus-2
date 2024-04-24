@@ -12,7 +12,7 @@
 
 #### MACROS ####
 SRC_DIR = ./
-SRC_FILES = pipex.c util_error.c util_path.c util_str.c util_split_reel.c util_free.c
+SRC_FILES = pipex.c util_error.c util_free.c util_path.c util_split_reel.c util_str.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 INC_DIR = ./
@@ -22,14 +22,15 @@ LIB = $(addprefix $(INC_DIR), $(INC_FILES))
 OBJ = $(subst .c,.o,$(SRC))
 
 CFLAGS = -Wall -Wextra -Werror 
-EFLAGS  = -pedantic -fsanitize=address -g3
+EFLAGS = -pedantic -g3 -g
+SFLAGS = -fsanitize=address
 NAME = pipex
 
 #### REGLAS ####
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(CFLAGS) $(EFLAGS) $(OBJ) -o $(NAME)
+	gcc $(CFLAGS) $(SFLAGS) $(EFLAGS) $(OBJ) -o $(NAME)
 	echo "«$(NAME)» created & indexed"
 
 $(filter-out %.o, $(SRC)): $(filter-out %.c, $(SRC))

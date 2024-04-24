@@ -75,6 +75,12 @@ int main()
     char str1[] = "Hola 'hi lolo' segundo 'par de'";
     printf("%i\n", space_betwen_quotes(str1, 39));
     printf("%s\n", str1);
+    int i = 0;
+    while (str1[i] != '\0')
+    {
+        printf("%c\n", str1[i]);
+        i++;
+    }
 
     return (0);
 }

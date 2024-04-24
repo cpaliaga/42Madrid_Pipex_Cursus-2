@@ -32,7 +32,6 @@ void	exec(char *argv, char **env)
 
 	space_betwen_quotes(argv, 39);
 	s_argv = split_reel(argv, ' ', 0);
-	//printf("%s \n %s \n", s_argv[0], s_argv[1]);
 	matrix_swap_char(s_argv);
 	s_len = 0;
 	while (s_argv[s_len] != NULL)
