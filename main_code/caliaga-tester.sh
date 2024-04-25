@@ -108,4 +108,3 @@ echo "TEST 12 Comillas"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile

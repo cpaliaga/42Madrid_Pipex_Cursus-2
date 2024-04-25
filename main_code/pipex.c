@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/23 22:28:26 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:06:17 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	fd_openfile(char *url, char opt)
 void	exec(char *argv, char **env)
 {
 	char	**s_argv;
- 	int		s_len;
+	int		s_len;
 	char	*path;
 	int		exe;
 
@@ -104,5 +104,6 @@ int	main(int argc, char **argv, char **env )
 		child(fd_pipe, argv, env);
 	parent(fd_pipe, argv, env);
 	w = waitpid(pid, &wstatus, 0);
+	WEXITSTATUS(wstatus);
 	return (w);
 }

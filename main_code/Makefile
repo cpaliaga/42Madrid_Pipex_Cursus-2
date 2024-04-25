@@ -6,7 +6,7 @@
 #    By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 14:41:58 by caliaga-          #+#    #+#              #
-#    Updated: 2024/04/23 22:19:40 by caliaga-         ###   ########.fr        #
+#    Updated: 2024/04/25 17:58:55 by caliaga-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,14 +23,14 @@ OBJ = $(subst .c,.o,$(SRC))
 
 CFLAGS = -Wall -Wextra -Werror 
 EFLAGS = -pedantic -g3
-SFLAGS = -fsanitize=address -fsanitize=leak
+SFLAGS = -fsanitize=address
 NAME = pipex
 
 #### REGLAS ####
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(CFLAGS) $(EFLAGS) $(OBJ) -o $(NAME)
+	gcc $(CFLAGS) $(EFLAGS) $(SFLAGS) $(OBJ) -o $(NAME)
 	echo "«$(NAME)» created & indexed"
 
 $(filter-out %.o, $(SRC)): $(filter-out %.c, $(SRC))
