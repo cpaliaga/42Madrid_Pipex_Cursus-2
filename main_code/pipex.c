@@ -27,8 +27,9 @@ int	fd_openfile(char *url, char opt)
 void	exec(char *argv, char **env)
 {
 	char	**s_argv;
-	int		s_len;
+ 	int		s_len;
 	char	*path;
+	int		exe;
 
 	space_betwen_quotes(argv, 39);
 	s_argv = split_reel(argv, ' ', 0);
@@ -42,7 +43,8 @@ void	exec(char *argv, char **env)
 		path = filepath_generator(s_argv[0], env);
 	if (path == NULL)
 		err_ctl(-1, "Bad path");
-	if (execve(path, s_argv, env) == -1)
+	exe = execve(path, s_argv, env);
+	if (exe == -1)
 		err_ctl(-1, "Bad execution");
 	matrix_free(s_argv, s_len);
 }
@@ -81,6 +83,8 @@ int	main(int argc, char **argv, char **env )
 {
 	int		fd_pipe[2];
 	pid_t	pid;
+	int		wstatus;
+	int		w;
 
 	if (argc != 5)
 		err_ctl(-1, "Bad params");
@@ -96,8 +100,9 @@ int	main(int argc, char **argv, char **env )
 	pid = fork();
 	if (pid == -1)
 		exit(EXIT_FAILURE);
-	if (!pid)
+	if (pid == 0)
 		child(fd_pipe, argv, env);
 	parent(fd_pipe, argv, env);
-	return (0);
+	w = waitpid(pid, &wstatus, 0);
+	return (w);
 }

@@ -22,15 +22,15 @@ LIB = $(addprefix $(INC_DIR), $(INC_FILES))
 OBJ = $(subst .c,.o,$(SRC))
 
 CFLAGS = -Wall -Wextra -Werror 
-EFLAGS = -pedantic -g3 -g
-SFLAGS = -fsanitize=address
+EFLAGS = -pedantic -g3
+SFLAGS = -fsanitize=address -fsanitize=leak
 NAME = pipex
 
 #### REGLAS ####
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(CFLAGS) $(SFLAGS) $(EFLAGS) $(OBJ) -o $(NAME)
+	gcc $(CFLAGS) $(EFLAGS) $(OBJ) -o $(NAME)
 	echo "«$(NAME)» created & indexed"
 
 $(filter-out %.o, $(SRC)): $(filter-out %.c, $(SRC))

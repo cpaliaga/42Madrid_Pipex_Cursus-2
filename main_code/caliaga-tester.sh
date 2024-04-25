@@ -1,6 +1,5 @@
 #!/usr/bin/sh
 
-# valgrind --leak-check=yes ./pipex infile "cat" "hostname" outfile
 rm outfileA && rm outfile
 
 echo " "
