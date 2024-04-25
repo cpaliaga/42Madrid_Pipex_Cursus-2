@@ -108,3 +108,11 @@ echo "TEST 12 Comillas"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
+
+echo " "
+echo "TEST 13 Comillas"
+< infile grep 1 | awk "{count++} END {print count}" > outfileA
+./pipex infile "grep 1" "awk \"{count++} END {print count}\"" outfile
+diff outfileA outfile
+ls -la outfileA && ls -la outfile
+cat outfileA && cat outfile

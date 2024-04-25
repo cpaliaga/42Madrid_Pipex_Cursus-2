@@ -33,82 +33,6 @@ char *set_command(const char *s, int *ix)
 	return (comm);
 }
 
-/** 
-char *count_quotes(const char *s, int *ix)
-{
-	int j;
-	int count;
-	int scount;
-	int dcount;
-
-
-	j = 0;
-	count = 0;
-	scount = 0;
-	dcount = 0;
-
-	while (s[*ix + j] != '\0')
-	{
-		if (s[*ix + j] == '\'')
-		{
-			scount++;
-			count++;
-		}
-		if (s[*ix + j] == '\"')
-			dcount++;
-			count++;
-
-		j++;
-	}
-	if (count % 2 != 0)
-	{
-		printf("Error: Quotes are not even\n");
-		return (NULL);
-	}
-
-}
-*/
-
-/**
- * char **parse_params(const char *s)
-{
-	int		cm;
-	int		ix;
-	char	*comm;
-	char	**argv;
-	char	**q_argv;
-
-	ix = 0;
-	comm = set_command(s, &ix);
-    printf("comm = %s\n", comm);
-
-
-	q_argv = split_reel(s, '\'', ix);
-
-	start = 0;
-	len = 0;
-	argv = (char **)malloc(sizeof(char *) * (ft_strlen(s) + 1));
-	if (!argv)
-		err_ctl(-1, "Bad malloc");
-	while (s[len] != '\0')
-	{
-		if (s[len] == c)
-		{
-			argv[i] = ft_substr(s, start, len - start);
-			start = len + 1;
-			i++;
-		}
-		len++;
-	}
-	argv[i] = ft_substr(s, start, len - start);
-	argv[i + 1] = NULL;
-	return (argv);
-
-} 
-*/
-
-
-
 int main(int argc, char **argv)
 
 {
@@ -122,15 +46,7 @@ int main(int argc, char **argv)
     char *com = set_command(argv[1], &ix);
     printf("comm = %s , ix = %i \n", com, ix);
     printf("argv[1] = %s\n", argv[1]);
-    /**
-    char **params = parse_params(argv[1]);
-    int i = 0;
-    while (params[i] != NULL)
-    {
-        printf("params[%d] = %s\n", i, params[i]);
-        i++;
-    }
-    */
+ 
     return (0);
 }
 

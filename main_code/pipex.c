@@ -6,7 +6,7 @@
 /*   By: caliaga- <caliaga-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:40:48 by caliaga-          #+#    #+#             */
-/*   Updated: 2024/04/25 18:06:17 by caliaga-         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:42:31 by caliaga-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	exec(char *argv, char **env)
 	char	*path;
 	int		exe;
 
+	space_betwen_quotes(argv, 34);
 	space_betwen_quotes(argv, 39);
 	s_argv = split_reel(argv, ' ', 0);
 	matrix_swap_char(s_argv);
