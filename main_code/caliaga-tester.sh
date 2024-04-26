@@ -9,7 +9,6 @@ echo "TEST 01 con cat y hostname"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 02 con grep 1 y head -2"
@@ -18,7 +17,6 @@ echo "TEST 02 con grep 1 y head -2"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 03 con grep 1 y wc -w"
@@ -27,7 +25,6 @@ echo "TEST 03 con grep 1 y wc -w"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 04"
@@ -36,7 +33,6 @@ echo "TEST 04"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 05 t26"
@@ -45,7 +41,6 @@ echo "TEST 05 t26"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 06"
@@ -54,7 +49,6 @@ echo "TEST 06"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 07"
@@ -63,7 +57,6 @@ echo "TEST 07"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 08 Comando con ruta completa"
@@ -72,7 +65,6 @@ echo "TEST 08 Comando con ruta completa"
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 09 con grep 1 y wc -w sin entorno"
@@ -81,7 +73,6 @@ env -i  ./pipex infile "grep 1" "wc -w" outfile
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 10"
@@ -90,7 +81,6 @@ env -i ./pipex infile "noexisting" "wc" outfile
 diff outfileA outfile
 ls -la outfileA && ls -la outfile
 cat outfileA && cat outfile
-rm outfileA && rm outfile
 
 echo " "
 echo "TEST 11 Archivo de entradda erroneo"
