@@ -1,4 +1,4 @@
-# EN CURSO, no terminado
+##### Proyecto ya presentaddo 26 de Abril.
 ### 42Madrid Cursus
 # Pipex Proyect
 
